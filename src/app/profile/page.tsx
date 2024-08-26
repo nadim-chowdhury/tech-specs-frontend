@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 export default function UserProfilePage() {
@@ -18,7 +20,7 @@ export default function UserProfilePage() {
     // Add more saved items as needed
   ]);
 
-  const handleUpdateProfile = (e) => {
+  const handleUpdateProfile = (e: any) => {
     e.preventDefault();
     // Handle profile update
     console.log("Profile updated:", userInfo);

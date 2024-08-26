@@ -1,22 +1,38 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+
+interface Product {
+  id: number;
+  name: string;
+  brand: string;
+  price: number;
+  ram: string;
+  storage: string;
+  image: string;
+}
+
+interface Filter {
+  brand: string;
+  priceRange: number[];
+  ram: string;
+  storage: string;
+}
 
 export default function ProductListing() {
   const router = useRouter();
-  const { category } = router.query;
+  const category = "phone";
 
-  const [filter, setFilter] = useState({
+  const [filter, setFilter] = useState<Filter>({
     brand: "",
-    priceRange: "",
+    priceRange: [],
     ram: "",
     storage: "",
   });
 
-  const products = [
-    // Sample product data
+  const products: Product[] = [
     {
       id: 1,
       name: "Phone 1",
@@ -24,7 +40,7 @@ export default function ProductListing() {
       price: 299,
       ram: "4GB",
       storage: "64GB",
-      image: "https://via.placeholder.com/150",
+      image: "",
     },
     {
       id: 2,
@@ -33,7 +49,7 @@ export default function ProductListing() {
       price: 399,
       ram: "6GB",
       storage: "128GB",
-      image: "https://via.placeholder.com/150",
+      image: "",
     },
     // More products...
   ];
@@ -41,13 +57,18 @@ export default function ProductListing() {
   const filteredProducts = products.filter((product) => {
     return (
       (filter.brand === "" || product.brand === filter.brand) &&
-      (filter.priceRange === "" ||
+      (filter.priceRange.length === 0 ||
         (product.price >= filter.priceRange[0] &&
           product.price <= filter.priceRange[1])) &&
       (filter.ram === "" || product.ram === filter.ram) &&
       (filter.storage === "" || product.storage === filter.storage)
     );
   });
+
+  const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value.split(",").map(Number);
+    setFilter({ ...filter, priceRange: value });
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -80,14 +101,12 @@ export default function ProductListing() {
             <label className="block mb-2 font-semibold">Price Range</label>
             <select
               className="p-2 w-full rounded"
-              value={filter.priceRange}
-              onChange={(e) =>
-                setFilter({ ...filter, priceRange: e.target.value })
-              }
+              value={filter.priceRange.join(",")}
+              onChange={handlePriceRangeChange}
             >
               <option value="">All</option>
-              <option value={[0, 299]}>$0 - $299</option>
-              <option value={[300, 599]}>$300 - $599</option>
+              <option value={[0, 299].join(",")}>$0 - $299</option>
+              <option value={[300, 599].join(",")}>$300 - $599</option>
               {/* Add more price ranges */}
             </select>
           </div>
@@ -145,6 +164,8 @@ export default function ProductListing() {
                   src={product.image}
                   alt={product.name}
                   className="w-full h-40 object-cover mb-2"
+                  width={150}
+                  height={150}
                 />
                 <h3 className="text-lg font-bold mb-2">{product.name}</h3>
                 <p>Brand: {product.brand}</p>

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 export default function ContactUsPage() {
@@ -8,11 +10,11 @@ export default function ContactUsPage() {
     message: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     // Handle form submission
     console.log(form);

@@ -1,3 +1,6 @@
+"use client";
+
+import Image from "next/image";
 import React, { useState } from "react";
 
 export default function ComparisonPage() {
@@ -28,7 +31,7 @@ export default function ComparisonPage() {
 
   const [selectedProducts, setSelectedProducts] = useState(products);
 
-  const removeProduct = (id) => {
+  const removeProduct = (id: any) => {
     setSelectedProducts(
       selectedProducts.filter((product) => product.id !== id)
     );
@@ -61,9 +64,11 @@ export default function ComparisonPage() {
             <td className="px-6 py-4 font-semibold">Image</td>
             {selectedProducts.map((product, index) => (
               <td key={index} className="px-6 py-4">
-                <img
+                <Image
                   src={product.image}
                   alt={product.name}
+                  width={480}
+                  height={480}
                   className="w-24 h-24"
                 />
               </td>

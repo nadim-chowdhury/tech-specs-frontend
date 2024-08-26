@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -25,7 +27,7 @@ export default function SearchResultsPage() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">
-        Search Results for "{searchQuery}"
+        Search Results for {searchQuery}
       </h1>
       <p className="text-gray-600 mb-8">{results.length} results found</p>
 
@@ -46,6 +48,8 @@ export default function SearchResultsPage() {
             <Image
               src={result.image}
               alt={result.name}
+              width={1280}
+              height={720}
               className="w-full h-48 object-cover mb-4"
             />
             <h2 className="text-2xl font-bold">{result.name}</h2>

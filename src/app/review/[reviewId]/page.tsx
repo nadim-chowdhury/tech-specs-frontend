@@ -1,9 +1,13 @@
+"use client";
+
 import React from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function ReviewPage() {
   const router = useRouter();
-  const { id } = router.query;
+  // const { id } = router.query;
+  const id = 555;
 
   // Sample data
   const review = {
@@ -47,9 +51,11 @@ export default function ReviewPage() {
     <div className="container mx-auto p-4">
       {/* Review Header */}
       <div className="flex items-center mb-8">
-        <img
+        <Image
           src={review.productImage}
           alt={review.productName}
+          width={360}
+          height={360}
           className="w-24 h-24 mr-4"
         />
         <div>
@@ -72,9 +78,11 @@ export default function ReviewPage() {
           <p>{section.text}</p>
           <div className="flex mt-4">
             {section.images.map((image, idx) => (
-              <img
+              <Image
                 key={idx}
                 src={image}
+                width={360}
+                height={360}
                 alt={section.sectionTitle}
                 className="w-1/3 h-auto mr-4"
               />

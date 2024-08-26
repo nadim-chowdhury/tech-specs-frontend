@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Image from "next/image";
 
 export default function Home() {
@@ -18,8 +19,10 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <div className="bg-white p-4 rounded-lg shadow-md">
             <Image
-              src="https://via.placeholder.com/150"
+              src=""
               alt="Product Image"
+              width={1280}
+              height={720}
               className="w-full h-40 object-cover mb-2"
             />
             <h3 className="text-lg font-bold mb-2">Mobile Phone 1</h3>
@@ -85,6 +88,8 @@ export default function Home() {
           Subscribe
         </button>
       </section>
+
+      <Footer />
     </main>
   );
 }

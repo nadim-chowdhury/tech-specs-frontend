@@ -1,40 +1,44 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/router';
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function ProductDetail() {
   const router = useRouter();
-  const { id } = router.query;
+  // const { id } = router.query;
+
+  const id = 420;
 
   const product = {
     id: 1,
-    name: 'Phone 1',
-    brand: 'Brand A',
-    releaseDate: '2024-08-01',
+    name: "Phone 1",
+    brand: "Brand A",
+    releaseDate: "2024-08-01",
     rating: 4.5,
-    images: [
-      'https://via.placeholder.com/300',
-      'https://via.placeholder.com/300',
-      'https://via.placeholder.com/300',
-    ],
+    images: ["", "", ""],
     keySpecs: {
-      processor: 'Octa-core 2.8 GHz',
-      ram: '6GB',
-      storage: '128GB',
-      display: '6.5-inch AMOLED',
-      battery: '4500mAh',
-      camera: '48MP + 12MP Dual',
+      processor: "Octa-core 2.8 GHz",
+      ram: "6GB",
+      storage: "128GB",
+      display: "6.5-inch AMOLED",
+      battery: "4500mAh",
+      camera: "48MP + 12MP Dual",
     },
     detailedSpecs: {
-      chipset: 'Snapdragon 888',
-      gpu: 'Adreno 660',
-      os: 'Android 12',
-      dimensions: '160.8 x 74.2 x 8.4 mm',
-      weight: '190g',
+      chipset: "Snapdragon 888",
+      gpu: "Adreno 660",
+      os: "Android 12",
+      dimensions: "160.8 x 74.2 x 8.4 mm",
+      weight: "190g",
     },
     reviews: [
-      { id: 1, user: 'John Doe', rating: 5, comment: 'Great phone!' },
-      { id: 2, user: 'Jane Smith', rating: 4, comment: 'Good value for money.' },
+      { id: 1, user: "John Doe", rating: 5, comment: "Great phone!" },
+      {
+        id: 2,
+        user: "Jane Smith",
+        rating: 4,
+        comment: "Good value for money.",
+      },
       // More reviews...
     ],
   };
@@ -44,7 +48,9 @@ export default function ProductDetail() {
       {/* Product Header */}
       <header className="mb-8">
         <h1 className="text-3xl font-bold">{product.name}</h1>
-        <p className="text-gray-600">Brand: {product.brand} | Release Date: {product.releaseDate}</p>
+        <p className="text-gray-600">
+          Brand: {product.brand} | Release Date: {product.releaseDate}
+        </p>
         <p className="text-yellow-500">Rating: {product.rating} / 5</p>
       </header>
 
@@ -52,9 +58,11 @@ export default function ProductDetail() {
       <section className="mb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {product.images.map((image, index) => (
-            <img
+            <Image
               key={index}
               src={image}
+              width={1280}
+              height={720}
               alt={`${product.name} Image ${index + 1}`}
               className="w-full h-64 object-cover rounded-lg"
             />
@@ -68,9 +76,7 @@ export default function ProductDetail() {
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <li>Processor: {product.keySpecs.processor}</li>
           <li>RAM: {product.keySpecs.ram}</li>
-          <li>Storage: {product.key
-
-Specs.storage}</li>
+          <li>Storage: {product.keySpecs.storage}</li>
           <li>Display: {product.keySpecs.display}</li>
           <li>Battery: {product.keySpecs.battery}</li>
           <li>Camera: {product.keySpecs.camera}</li>
