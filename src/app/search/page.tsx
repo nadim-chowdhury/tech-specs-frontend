@@ -44,7 +44,7 @@ export default function SearchResultsPage() {
       {/* Search Results List/Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {results.map((result) => (
-          <div key={result.id} className="border p-4 rounded-lg shadow-md">
+          <div key={result.id} className="border p-4 rounded-lg">
             <Image
               src={result.image}
               alt={result.name}

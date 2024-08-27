@@ -1,3 +1,10 @@
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaTwitter,
+  FaPinterest,
+  FaReddit,
+} from "react-icons/fa";
 import Link from "next/link";
 
 export default function Footer() {
@@ -12,9 +19,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="hover:text-gray-400"
           >
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              {/* Facebook SVG Icon */}
-            </svg>
+            <FaFacebook />
           </Link>
           <Link
             href="https://twitter.com"
@@ -22,9 +27,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="hover:text-gray-400"
           >
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              {/* Twitter SVG Icon */}
-            </svg>
+            <FaTwitter />
           </Link>
           <Link
             href="https://linkedin.com"
@@ -32,9 +35,23 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="hover:text-gray-400"
           >
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              {/* LinkedIn SVG Icon */}
-            </svg>
+            <FaLinkedin />
+          </Link>
+          <Link
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gray-400"
+          >
+            <FaReddit />
+          </Link>
+          <Link
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gray-400"
+          >
+            <FaPinterest />
           </Link>
         </div>
       </div>

@@ -156,10 +156,7 @@ export default function ProductListing() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {filteredProducts.map((product) => (
-              <div
-                key={product.id}
-                className="bg-white p-4 rounded-lg shadow-md"
-              >
+              <div key={product.id} className="bg-white p-4 rounded-lg">
                 <Image
                   src={product.image}
                   alt={product.name}

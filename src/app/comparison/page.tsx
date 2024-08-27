@@ -42,7 +42,7 @@ export default function ComparisonPage() {
       <h1 className="text-3xl font-bold mb-8">Product Comparison</h1>
 
       {/* Comparison Table */}
-      <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+      <table className="min-w-full bg-white rounded-lg overflow-hidden">
         <thead>
           <tr className="bg-gray-200">
             <th className="px-6 py-3">Feature</th>

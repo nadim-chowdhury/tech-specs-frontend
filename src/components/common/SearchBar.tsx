@@ -14,7 +14,7 @@ export default function SearchBar() {
     <form onSubmit={handleSearch} className="relative max-w-lg mx-auto">
       <input
         type="text"
-        className="w-full py-3 pl-4 pr-16 text-slate-700 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-primary"
+        className="w-full py-3 pl-4 pr-16 text-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
         placeholder="Search products, reviews..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}

@@ -86,7 +86,7 @@ export default function ProductDetail() {
       {/* Detailed Specifications */}
       <section className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Detailed Specifications</h2>
-        <table className="table-auto w-full bg-white rounded-lg shadow-md p-4">
+        <table className="table-auto w-full bg-white rounded-lg p-4">
           <tbody>
             <tr>
               <td className="p-2 font-semibold">Chipset</td>

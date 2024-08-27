@@ -9,14 +9,13 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="container mx-auto">
+    <main className="container mx-auto flex flex-col gap-16">
       <HeroSection />
       <FeaturedProducts />
       <LatestReviews />
       <PopularCategories />
       <TrendingArticles />
       <SubscriptionCta />
-      <Footer />
     </main>
   );
 }
