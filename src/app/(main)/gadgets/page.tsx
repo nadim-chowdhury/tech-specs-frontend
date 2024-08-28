@@ -1,3 +1,3 @@
-export default function Gadgets() {
+export default function AllGadgets() {
   return <section></section>;
 }
