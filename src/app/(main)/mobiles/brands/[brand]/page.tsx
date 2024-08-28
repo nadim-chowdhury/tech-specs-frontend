@@ -3,27 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
-interface Product {
-  id: number;
-  name: string;
-  brand: string;
-  price: number;
-  ram: string;
-  storage: string;
-  image: string;
-}
-
-interface Filter {
-  brand: string;
-  priceRange: number[];
-  ram: string;
-  storage: string;
-}
+import { Filter, Product } from "@/interfaces/mobiles";
+import { mobileProducts } from "@/utils/mobile-demo-data";
 
 export default function BrandAllMobilesPage() {
   const router = useRouter();
-  const category = "phone";
+  const category = "Xiaomi";
 
   const [filter, setFilter] = useState<Filter>({
     brand: "",
@@ -32,29 +17,7 @@ export default function BrandAllMobilesPage() {
     storage: "",
   });
 
-  const products: Product[] = [
-    {
-      id: 1,
-      name: "Phone 1",
-      brand: "Brand A",
-      price: 299,
-      ram: "4GB",
-      storage: "64GB",
-      image: "",
-    },
-    {
-      id: 2,
-      name: "Phone 2",
-      brand: "Brand B",
-      price: 399,
-      ram: "6GB",
-      storage: "128GB",
-      image: "",
-    },
-    // More products...
-  ];
-
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = mobileProducts.filter((product) => {
     return (
       (filter.brand === "" || product.brand === filter.brand) &&
       (filter.priceRange.length === 0 ||
@@ -97,6 +60,7 @@ export default function BrandAllMobilesPage() {
               {/* Add more brands */}
             </select>
           </div>
+
           <div className="mb-4">
             <label className="block mb-2 font-semibold">Price Range</label>
             <select
@@ -110,6 +74,7 @@ export default function BrandAllMobilesPage() {
               {/* Add more price ranges */}
             </select>
           </div>
+
           <div className="mb-4">
             <label className="block mb-2 font-semibold">RAM</label>
             <select
@@ -123,6 +88,7 @@ export default function BrandAllMobilesPage() {
               {/* Add more RAM options */}
             </select>
           </div>
+
           <div className="mb-4">
             <label className="block mb-2 font-semibold">Storage</label>
             <select
@@ -154,13 +120,14 @@ export default function BrandAllMobilesPage() {
               {/* Add more sorting options */}
             </select>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
-              <div key={product.id} className="bg-white p-4 rounded-lg">
+              <div key={product.id} className="bg-slate-50 p-4 rounded-lg">
                 <Image
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-40 object-cover mb-2"
+                  className="w-full h-32 object-cover mb-2 rounded-md"
                   width={150}
                   height={150}
                 />
