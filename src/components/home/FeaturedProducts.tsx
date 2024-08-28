@@ -27,7 +27,7 @@ export default function FeaturedProducts() {
               </h3>
               <p className="text-slate-600">{product.shortDescription}</p>
               <a
-                href={`/product/${product.id}`}
+                href={`/products/${product.id}`}
                 className="mt-4 inline-block text-primary font-semibold hover:underline"
               >
                 View Details

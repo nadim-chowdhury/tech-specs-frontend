@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { Menu, Search } from "lucide-react";
 import { navLinks } from "@/utils/nav-links";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 
 export default function Navbar() {
   return (

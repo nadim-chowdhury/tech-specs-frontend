@@ -1,3 +1,3 @@
-export default function Reviews() {
+export default function AllReviews() {
   return <section></section>;
 }
