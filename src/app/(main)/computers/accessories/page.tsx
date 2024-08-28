@@ -1,3 +1,3 @@
-export default function AllAccesories() {
+export default function AllAccesoriesPage() {
   return <section></section>;
 }

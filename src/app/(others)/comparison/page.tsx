@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-export default function ComparisonPage() {
+export default function ProductsComparisonPage() {
   // Sample data
   const products = [
     {

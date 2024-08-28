@@ -4,8 +4,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 export default function SearchResultsPage() {
-  // Sample data
   const [searchQuery] = useState("iPhone");
+
   const results = [
     {
       id: 1,
@@ -21,7 +21,6 @@ export default function SearchResultsPage() {
         "Previous generation, still a powerful device with A14 Bionic chip.",
       image: "/images/iphone-12.jpg",
     },
-    // Add more results as needed
   ];
 
   return (

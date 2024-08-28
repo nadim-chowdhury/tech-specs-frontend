@@ -35,10 +35,14 @@ export default function Navbar() {
             </Button>
           </DialogTrigger>
 
-          <DialogContent className="w-[90%] rounded-lg min-h-[50vh]">
-            <div className="mt-8 flex items-center gap-2">
+          <DialogContent className="w-[90%] rounded-lg">
+            <div className="mt-8 flex items-start gap-2">
               <Input placeholder="Search Here" />
-              <Button variant="outline" size="icon" className="w-12">
+              <Button
+                variant="outline"
+                size="icon"
+                className="w-12 bg-blue-600 text-white"
+              >
                 <Search className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               </Button>
             </div>

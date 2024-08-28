@@ -1,3 +1,3 @@
-export default function AllDeskops() {
+export default function AllDeskopsPage() {
   return <div></div>;
 }

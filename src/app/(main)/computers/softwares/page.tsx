@@ -1,3 +1,3 @@
-export default function AllSoftwares() {
+export default function AllSoftwaresPage() {
   return <section></section>;
 }

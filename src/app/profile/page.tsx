@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-export default function UserProfilePage() {
+export default function ProfilePage() {
   const [userInfo, setUserInfo] = useState({
     name: "John Doe",
     email: "john@example.com",

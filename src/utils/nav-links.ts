@@ -30,9 +30,9 @@ export const navLinks = [
       "Complete specifications for a wide range of tech products, including smartphones, laptops, cameras, and other gadgets.",
   },
   {
-    title: "Guides",
-    href: "/guides",
+    title: "Articles",
+    href: "/articles",
     description:
-      "Expert buying guides to help you choose the best tech products based on your needs and budget.",
+      "Expert articles to help you choose the best tech products based on your needs and budget.",
   },
 ];

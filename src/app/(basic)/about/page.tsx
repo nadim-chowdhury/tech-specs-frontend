@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function AboutUsPage() {
+export default function AboutPage() {
   const teamMembers = [
     {
       name: "John Doe",

@@ -1,3 +1,3 @@
-export default function AllComputers() {
+export default function AllComputersPage() {
   return <section></section>;
 }

@@ -1,3 +1,3 @@
-export default function AllCameras() {
+export default function AllCamerasPage() {
   return <section></section>;
 }

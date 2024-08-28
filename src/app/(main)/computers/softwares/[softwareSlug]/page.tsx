@@ -1,3 +1,3 @@
-export default function SoftwareSlug() {
+export default function SoftwareSlugPage() {
   return <section></section>;
 }
