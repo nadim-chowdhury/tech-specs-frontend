@@ -21,7 +21,7 @@ interface Filter {
   storage: string;
 }
 
-export default function ProductListing() {
+export default function BrandAllMobiles() {
   const router = useRouter();
   const category = "phone";
 
