@@ -1,5 +1,6 @@
 import { featuredProducts } from "@/utils/featured-products";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function FeaturedProducts() {
   return (
@@ -13,25 +14,28 @@ export default function FeaturedProducts() {
           {featuredProducts?.map((product: any) => (
             <div
               key={product.id}
-              className="bg-slate-50 p-6 rounded-lg flex flex-col justify-between transition-all duration-500 hover:bg-slate-100 border"
+              className="bg-slate-50 rounded-lg flex flex-col justify-between transition-all duration-500 hover:bg-slate-100 border"
             >
               <Image
                 src={product.image}
                 alt={product.name}
                 width={1280}
                 height={720}
-                className="h-40 w-full object-cover mb-4 rounded-md"
+                className="h-48 w-full object-cover mb-4 rounded-md"
               />
-              <h3 className="text-xl font-semibold text-slate-800">
-                {product.name}
-              </h3>
-              <p className="text-slate-600">{product.shortDescription}</p>
-              <a
-                href={`/products/${product.id}`}
-                className="mt-4 inline-block text-primary font-semibold hover:underline"
-              >
-                View Details
-              </a>
+
+              <div className="px-6">
+                <h3 className="text-xl font-semibold text-slate-800">
+                  {product.name}
+                </h3>
+                <p className="text-slate-600">{product.shortDescription}</p>
+                <Link
+                  href={`/products/${product.id}`}
+                  className="mt-4 mb-6 inline-block text-primary font-semibold hover:underline"
+                >
+                  View Details
+                </Link>
+              </div>
             </div>
           ))}
         </div>

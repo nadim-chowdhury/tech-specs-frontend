@@ -7,23 +7,23 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-gray-800 text-white">
+    <nav className="bg-slate-800 text-white">
       <div className="container mx-auto flex justify-between items-center p-4">
         <div className="text-2xl font-bold">TechReviews</div>
         <div className="hidden md:flex space-x-4">
-          <Link href="/" className="hover:text-gray-300">
+          <Link href="/" className="hover:text-slate-300">
             Home
           </Link>
-          <Link href="/reviews" className="hover:text-gray-300">
+          <Link href="/reviews" className="hover:text-slate-300">
             Reviews
           </Link>
-          <Link href="/specifications" className="hover:text-gray-300">
+          <Link href="/specifications" className="hover:text-slate-300">
             Specifications
           </Link>
-          <Link href="/blog" className="hover:text-gray-300">
+          <Link href="/blog" className="hover:text-slate-300">
             Blog
           </Link>
-          <Link href="/contact" className="hover:text-gray-300">
+          <Link href="/contact" className="hover:text-slate-300">
             Contact
           </Link>
         </div>
@@ -73,31 +73,31 @@ export default function Navbar() {
         <div className="md:hidden">
           <Link
             href="/"
-            className="block px-4 py-2 text-white hover:bg-gray-700"
+            className="block px-4 py-2 text-white hover:bg-slate-700"
           >
             Home
           </Link>
           <Link
             href="/reviews"
-            className="block px-4 py-2 text-white hover:bg-gray-700"
+            className="block px-4 py-2 text-white hover:bg-slate-700"
           >
             Reviews
           </Link>
           <Link
             href="/specifications"
-            className="block px-4 py-2 text-white hover:bg-gray-700"
+            className="block px-4 py-2 text-white hover:bg-slate-700"
           >
             Specifications
           </Link>
           <Link
             href="/blog"
-            className="block px-4 py-2 text-white hover:bg-gray-700"
+            className="block px-4 py-2 text-white hover:bg-slate-700"
           >
             Blog
           </Link>
           <Link
             href="/contact"
-            className="block px-4 py-2 text-white hover:bg-gray-700"
+            className="block px-4 py-2 text-white hover:bg-slate-700"
           >
             Contact
           </Link>

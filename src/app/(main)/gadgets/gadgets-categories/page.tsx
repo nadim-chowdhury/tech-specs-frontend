@@ -21,10 +21,10 @@ export default function AllGadgetsCategoriesPage() {
             />
 
             <div className="p-4">
-              <h2 className="text-lg font-semibold text-gray-800 mb-2">
+              <h2 className="text-lg font-semibold text-slate-800 mb-2">
                 {category.name}
               </h2>
-              <p className="text-sm text-gray-600">{category.description}</p>
+              <p className="text-sm text-slate-600">{category.description}</p>
             </div>
           </div>
         ))}

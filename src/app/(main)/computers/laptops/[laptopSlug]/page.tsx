@@ -30,10 +30,10 @@ export default function LaptopSlugPage() {
         {/* Laptop Details */}
         <div>
           <h1 className="text-3xl font-bold mb-4">{demoLaptopItem.name}</h1>
-          <p className="text-xl text-gray-700 mb-2">
+          <p className="text-xl text-slate-700 mb-2">
             <strong>Brand:</strong> {demoLaptopItem.brand}
           </p>
-          <p className="text-xl text-gray-700 mb-4">
+          <p className="text-xl text-slate-700 mb-4">
             <strong>Price:</strong> {demoLaptopItem.price}
           </p>
 

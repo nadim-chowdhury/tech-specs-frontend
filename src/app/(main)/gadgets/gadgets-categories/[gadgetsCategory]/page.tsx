@@ -33,19 +33,19 @@ export default function GadgetCategoryPage() {
               />
 
               <div className="p-4">
-                <h2 className="text-lg font-semibold text-gray-800 mb-2">
+                <h2 className="text-lg font-semibold text-slate-800 mb-2">
                   {gadget.name}
                 </h2>
-                <p className="text-sm text-gray-600 mb-1">
+                <p className="text-sm text-slate-600 mb-1">
                   <strong>Price:</strong> {gadget.price}
                 </p>
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-sm text-slate-600 mb-4">
                   <strong>Description:</strong> {gadget.description}
                 </p>
-                <h3 className="text-md font-semibold text-gray-800 mb-2">
+                <h3 className="text-md font-semibold text-slate-800 mb-2">
                   Features:
                 </h3>
-                <ul className="list-disc list-inside text-sm text-gray-600">
+                <ul className="list-disc list-inside text-sm text-slate-600">
                   {gadget.features.map((feature, index) => (
                     <li key={index}>{feature}</li>
                   ))}
@@ -55,7 +55,7 @@ export default function GadgetCategoryPage() {
           ))}
         </div>
       ) : (
-        <p className="text-center text-gray-600">
+        <p className="text-center text-slate-600">
           No gadgets found in this category.
         </p>
       )}

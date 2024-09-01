@@ -20,7 +20,7 @@ export default function Navbar() {
           <Link
             key={link.href}
             href={link.href}
-            className="transition-all duration-300 font-medium hover:text-cyan-600"
+            className="transition-all duration-300 font-medium hover:text-slate-600"
           >
             {link.title}
           </Link>
@@ -62,7 +62,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="transition-all duration-300 font-medium hover:text-cyan-600"
+                  className="transition-all duration-300 font-medium hover:text-slate-600"
                 >
                   {link.title}
                 </Link>

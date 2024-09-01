@@ -44,7 +44,7 @@ export default function ProductsComparisonPage() {
       {/* Comparison Table */}
       <table className="min-w-full bg-white rounded-lg overflow-hidden">
         <thead>
-          <tr className="bg-gray-200">
+          <tr className="bg-slate-200">
             <th className="px-6 py-3">Feature</th>
             {selectedProducts.map((product, index) => (
               <th key={index} className="px-6 py-3 relative">

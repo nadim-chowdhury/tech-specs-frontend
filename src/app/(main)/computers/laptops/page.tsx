@@ -21,28 +21,28 @@ export default function AllLaptopsPage() {
             />
 
             <div className="p-4">
-              <h2 className="text-lg font-semibold text-gray-800 mb-2">
+              <h2 className="text-lg font-semibold text-slate-800 mb-2">
                 {laptop.name}
               </h2>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-slate-600 mb-1">
                 <strong>Brand:</strong> {laptop.brand}
               </p>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-slate-600 mb-1">
                 <strong>Price:</strong> {laptop.price}
               </p>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-slate-600 mb-1">
                 <strong>Display:</strong> {laptop.specs.display}
               </p>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-slate-600 mb-1">
                 <strong>Processor:</strong> {laptop.specs.processor}
               </p>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-slate-600 mb-1">
                 <strong>Storage:</strong> {laptop.specs.storage}
               </p>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-slate-600 mb-1">
                 <strong>RAM:</strong> {laptop.specs.ram}
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-slate-600">
                 <strong>Graphics:</strong> {laptop.specs.graphics}
               </p>
             </div>

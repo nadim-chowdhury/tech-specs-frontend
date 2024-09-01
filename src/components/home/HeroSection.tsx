@@ -49,7 +49,7 @@ const ProductSwiper = ({ products, customDuration }: any) => (
 
 export default function HeroSection() {
   return (
-    <section className="container mx-auto lg:h-[60vh]">
+    <section className="container mx-auto h-[60vh]">
       {/* <section className="container mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 lg:h-[60vh]"> */}
       {/* Main Swiper */}
       {/* <div className="h-[40vh] md:h-[60vh] col-span-1 lg:col-span-2"> */}

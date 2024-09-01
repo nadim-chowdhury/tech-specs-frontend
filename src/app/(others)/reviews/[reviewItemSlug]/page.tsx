@@ -67,7 +67,7 @@ export default function ReviewItemSlugPage() {
       {/* Reviewer Details */}
       <div className="mb-8">
         <p className="font-semibold">{review.reviewer.name}</p>
-        <p className="text-gray-500">{review.reviewer.date}</p>
+        <p className="text-slate-500">{review.reviewer.date}</p>
         <p>{review.reviewer.summary}</p>
       </div>
 
@@ -121,7 +121,7 @@ export default function ReviewItemSlugPage() {
           {Object.entries(review.ratingDistribution).map(([stars, count]) => (
             <div key={stars} className="flex items-center">
               <span className="w-12">{stars} stars</span>
-              <div className="bg-gray-300 w-full h-4 rounded-md overflow-hidden">
+              <div className="bg-slate-300 w-full h-4 rounded-md overflow-hidden">
                 <div
                   className="bg-yellow-500 h-full"
                   style={{ width: `${count}%` }}

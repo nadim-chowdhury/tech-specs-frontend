@@ -43,7 +43,7 @@ export default function AboutPage() {
                 className="w-32 h-32 rounded-full mx-auto mb-4"
               />
               <h3 className="text-xl font-bold">{member.name}</h3>
-              <p className="text-gray-600">{member.role}</p>
+              <p className="text-slate-600">{member.role}</p>
               <p className="mt-2">{member.bio}</p>
             </div>
           ))}

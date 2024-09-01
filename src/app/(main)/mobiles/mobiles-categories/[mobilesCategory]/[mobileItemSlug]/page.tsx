@@ -14,7 +14,7 @@ export default function MobileItemSlugPage() {
       {/* mobileItem Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold">{mobileItem.name}</h1>
-        <p className="text-gray-600">
+        <p className="text-slate-600">
           Brand: {mobileItem.brand} | Release Date: {mobileItem.releaseDate}
         </p>
         <p className="text-yellow-500">Rating: {mobileItem.rating} / 5</p>
@@ -97,7 +97,7 @@ export default function MobileItemSlugPage() {
         <button className="bg-blue-600 text-white px-4 py-2 rounded">
           Buy Now
         </button>
-        <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded ml-4">
+        <button className="bg-slate-200 text-slate-800 px-4 py-2 rounded ml-4">
           Compare
         </button>
       </div>

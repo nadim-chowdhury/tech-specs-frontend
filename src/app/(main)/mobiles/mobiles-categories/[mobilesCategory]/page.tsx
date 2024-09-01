@@ -1,21 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Filter, Product } from "@/interfaces/mobiles";
+import Link from "next/link";
+import { Filter } from "@/interfaces/mobiles";
 import { mobileProducts } from "@/utils/mobile-demo-data";
 
 export default function BrandAllMobilesPage() {
-  const router = useRouter();
-  const category = "Xiaomi";
-
   const [filter, setFilter] = useState<Filter>({
     brand: "",
     priceRange: [],
     ram: "",
     storage: "",
   });
+
+  const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value.split(",").map(Number);
+    setFilter({ ...filter, priceRange: value });
+  };
 
   const filteredProducts = mobileProducts.filter((product) => {
     return (
@@ -28,38 +30,23 @@ export default function BrandAllMobilesPage() {
     );
   });
 
-  const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value.split(",").map(Number);
-    setFilter({ ...filter, priceRange: value });
-  };
-
   return (
-    <div className="container mx-auto p-4">
+    <section className="container mx-auto">
       {/* Category Header */}
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold">{category} Phones</h1>
-        <p className="text-gray-600">
-          Explore the latest {category} phones with detailed specs and reviews.
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold">
+          {filter.brand || "Xiaomi"} Phones
+        </h1>
+        <p className="text-slate-600">
+          Explore the latest {filter.brand || "Xiaomi"} phones with detailed
+          specs and reviews.
         </p>
-      </header>
+      </div>
 
-      <div className="flex">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Filters Sidebar */}
-        <aside className="w-1/4 p-4 bg-gray-100 rounded-lg border">
+        <aside className="p-6 bg-slate-100 rounded-lg border">
           <h2 className="text-xl font-bold mb-4">Filters</h2>
-          <div className="mb-4">
-            <label className="block mb-2 font-semibold">Brand</label>
-            <select
-              className="p-2 w-full rounded"
-              value={filter.brand}
-              onChange={(e) => setFilter({ ...filter, brand: e.target.value })}
-            >
-              <option value="">All</option>
-              <option value="Brand A">Brand A</option>
-              <option value="Brand B">Brand B</option>
-              {/* Add more brands */}
-            </select>
-          </div>
 
           <div className="mb-4">
             <label className="block mb-2 font-semibold">Price Range</label>
@@ -71,7 +58,7 @@ export default function BrandAllMobilesPage() {
               <option value="">All</option>
               <option value={[0, 299].join(",")}>$0 - $299</option>
               <option value={[300, 599].join(",")}>$300 - $599</option>
-              {/* Add more price ranges */}
+              {/* Add more price ranges as needed */}
             </select>
           </div>
 
@@ -85,7 +72,7 @@ export default function BrandAllMobilesPage() {
               <option value="">All</option>
               <option value="4GB">4GB</option>
               <option value="6GB">6GB</option>
-              {/* Add more RAM options */}
+              {/* Add more RAM options as needed */}
             </select>
           </div>
 
@@ -101,56 +88,72 @@ export default function BrandAllMobilesPage() {
               <option value="">All</option>
               <option value="64GB">64GB</option>
               <option value="128GB">128GB</option>
-              {/* Add more storage options */}
+              {/* Add more storage options as needed */}
             </select>
           </div>
         </aside>
 
         {/* Product Grid */}
-        <section className="w-3/4 p-4">
+        <div className="md:col-span-3">
           <div className="flex justify-end mb-4">
-            <select
-              className="p-2 rounded"
-              onChange={(e) => {
-                // Add sorting logic
-              }}
-            >
+            <select className="p-2 rounded">
               <option value="relevance">Sort by Relevance</option>
               <option value="price">Sort by Price</option>
-              {/* Add more sorting options */}
+              {/* Add more sorting options as needed */}
             </select>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map((product) => (
-              <div key={product.id} className="bg-slate-50 p-4 rounded-lg border">
+              <div
+                key={product.id}
+                className="bg-slate-50 rounded-lg overflow-hidden border flex flex-col"
+              >
                 <Image
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-32 object-cover mb-2 rounded-md"
+                  className="w-full h-48 object-cover mb-2 rounded-t-md"
                   width={150}
                   height={150}
                 />
-                <h3 className="text-lg font-bold mb-2">{product.name}</h3>
-                <p>Brand: {product.brand}</p>
-                <p>Price: ${product.price}</p>
-                <p>RAM: {product.ram}</p>
-                <p>Storage: {product.storage}</p>
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-slate-800 mb-2">
+                    {product.name}
+                  </h3>
+                  <p className="text-sm text-slate-600">RAM: {product.ram}</p>
+                  <p className="text-sm text-slate-600">
+                    Storage: {product.storage}
+                  </p>
+                </div>
+                <div className="p-6 mt-auto">
+                  <Link
+                    href={`/mobiles/mobiles-categories/${product.brand.toLowerCase()}/${
+                      product.id
+                    }`}
+                    className="font-bold text-slate-600 hover:underline"
+                  >
+                    View More
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
-        </section>
-      </div>
 
-      {/* Pagination */}
-      <div className="flex justify-center mt-8">
-        <button className="px-4 py-2 mx-1 bg-gray-200 rounded">Previous</button>
-        <button className="px-4 py-2 mx-1 bg-blue-600 text-white rounded">
-          1
-        </button>
-        <button className="px-4 py-2 mx-1 bg-gray-200 rounded">2</button>
-        <button className="px-4 py-2 mx-1 bg-gray-200 rounded">Next</button>
+          {/* Pagination */}
+          <div className="flex justify-center mt-8">
+            <button className="px-4 py-2 mx-1 bg-slate-200 rounded">
+              Previous
+            </button>
+            <button className="px-4 py-2 mx-1 bg-blue-600 text-white rounded">
+              1
+            </button>
+            <button className="px-4 py-2 mx-1 bg-slate-200 rounded">2</button>
+            <button className="px-4 py-2 mx-1 bg-slate-200 rounded">
+              Next
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

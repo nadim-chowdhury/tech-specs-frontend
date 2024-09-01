@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white p-4 mt-8">
+    <footer className="bg-slate-900 text-white p-4 mt-8">
       <div className="container mx-auto text-center">
         <p>&copy; 2024 TechReviews. All rights reserved.</p>
         <div className="flex justify-center space-x-4 mt-2">
@@ -17,7 +17,7 @@ export default function Footer() {
             href="https://facebook.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-400"
+            className="hover:text-slate-400"
           >
             <FaFacebook />
           </Link>
@@ -25,7 +25,7 @@ export default function Footer() {
             href="https://twitter.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-400"
+            className="hover:text-slate-400"
           >
             <FaTwitter />
           </Link>
@@ -33,7 +33,7 @@ export default function Footer() {
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-400"
+            className="hover:text-slate-400"
           >
             <FaLinkedin />
           </Link>
@@ -41,7 +41,7 @@ export default function Footer() {
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-400"
+            className="hover:text-slate-400"
           >
             <FaReddit />
           </Link>
@@ -49,7 +49,7 @@ export default function Footer() {
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-400"
+            className="hover:text-slate-400"
           >
             <FaPinterest />
           </Link>

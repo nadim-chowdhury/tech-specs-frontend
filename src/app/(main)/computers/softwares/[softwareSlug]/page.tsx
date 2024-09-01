@@ -30,23 +30,23 @@ export default function SoftwareSlugPage() {
         {/* Software Details */}
         <div>
           <h1 className="text-3xl font-bold mb-4">{software.name}</h1>
-          <p className="text-lg text-gray-700 mb-2">
+          <p className="text-lg text-slate-700 mb-2">
             <strong>Category:</strong> {software.category}
           </p>
-          <p className="text-lg text-gray-700 mb-2">
+          <p className="text-lg text-slate-700 mb-2">
             <strong>Price:</strong> {software.price}
           </p>
-          <p className="text-lg text-gray-700 mb-4">
+          <p className="text-lg text-slate-700 mb-4">
             <strong>Platform:</strong> {software.platform}
           </p>
 
           <h2 className="text-2xl font-semibold mb-4">Description:</h2>
-          <p className="text-gray-600 mb-6">{software.description}</p>
+          <p className="text-slate-600 mb-6">{software.description}</p>
 
           <h2 className="text-2xl font-semibold mb-4">Features:</h2>
           <ul className="list-disc pl-5 space-y-2">
             {software.features.map((feature, index) => (
-              <li key={index} className="text-gray-600">
+              <li key={index} className="text-slate-600">
                 {feature}
               </li>
             ))}

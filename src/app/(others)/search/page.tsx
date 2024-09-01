@@ -28,7 +28,7 @@ export default function SearchResultsPage() {
       <h1 className="text-3xl font-bold mb-4">
         Search Results for {searchQuery}
       </h1>
-      <p className="text-gray-600 mb-8">{results.length} results found</p>
+      <p className="text-slate-600 mb-8">{results.length} results found</p>
 
       {/* Filters and Sorting Options */}
       <div className="mb-8">
@@ -52,7 +52,7 @@ export default function SearchResultsPage() {
               className="w-full h-48 object-cover mb-4"
             />
             <h2 className="text-2xl font-bold">{result.name}</h2>
-            <p className="text-gray-700">{result.description}</p>
+            <p className="text-slate-700">{result.description}</p>
             <a
               href={`/product/${result.id}`}
               className="text-blue-600 underline mt-4 inline-block"
@@ -65,10 +65,10 @@ export default function SearchResultsPage() {
 
       {/* Pagination */}
       <div className="mt-8">
-        <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2">
+        <button className="bg-slate-300 text-slate-700 px-4 py-2 rounded mr-2">
           Previous
         </button>
-        <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded">
+        <button className="bg-slate-300 text-slate-700 px-4 py-2 rounded">
           Next
         </button>
       </div>

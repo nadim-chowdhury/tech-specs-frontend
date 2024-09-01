@@ -29,10 +29,10 @@ export default function GadgetItemSlugPage() {
         />
         <div className="flex flex-col justify-between">
           <h1 className="text-3xl font-bold mb-4">{gadget.name}</h1>
-          <p className="text-gray-600 mb-4">{gadget.description}</p>
+          <p className="text-slate-600 mb-4">{gadget.description}</p>
           <ul className="list-disc list-inside mb-4">
             {gadget.features.map((feature, index) => (
-              <li key={index} className="text-gray-700">
+              <li key={index} className="text-slate-700">
                 {feature}
               </li>
             ))}

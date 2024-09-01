@@ -9,7 +9,7 @@ export default function AllBrandsPage() {
         {mobileBrands?.map((brand, index) => (
           <li
             key={index}
-            className="bg-slate-50 rounded-lg p-6 text-center text-lg font-medium text-gray-800"
+            className="bg-slate-50 rounded-lg p-6 text-center text-lg font-medium text-slate-800"
           >
             {brand}
           </li>

@@ -2,23 +2,23 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="bg-gray-800 text-white">
+    <header className="bg-slate-800 text-white">
       <div className="container mx-auto flex justify-between items-center p-4">
         <div className="text-2xl font-bold">TechReviews</div>
         <nav className="hidden md:flex space-x-4">
-          <Link href="/" className="hover:text-gray-300">
+          <Link href="/" className="hover:text-slate-300">
             Home
           </Link>
-          <Link href="/reviews" className="hover:text-gray-300">
+          <Link href="/reviews" className="hover:text-slate-300">
             Reviews
           </Link>
-          <Link href="/specifications" className="hover:text-gray-300">
+          <Link href="/specifications" className="hover:text-slate-300">
             Specifications
           </Link>
-          <Link href="/blog" className="hover:text-gray-300">
+          <Link href="/blog" className="hover:text-slate-300">
             Blog
           </Link>
-          <Link href="/contact" className="hover:text-gray-300">
+          <Link href="/contact" className="hover:text-slate-300">
             Contact
           </Link>
         </nav>

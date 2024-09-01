@@ -21,19 +21,19 @@ export default function AllSoftwaresPage() {
             />
 
             <div className="p-4">
-              <h2 className="text-lg font-semibold text-gray-800 mb-2">
+              <h2 className="text-lg font-semibold text-slate-800 mb-2">
                 {software.name}
               </h2>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-slate-600 mb-1">
                 <strong>Category:</strong> {software.category}
               </p>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-slate-600 mb-1">
                 <strong>Price:</strong> {software.price}
               </p>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-slate-600 mb-1">
                 <strong>Platform:</strong> {software.platform}
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-slate-600">
                 <strong>Description:</strong> {software.description}
               </p>
             </div>
