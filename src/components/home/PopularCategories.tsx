@@ -13,7 +13,7 @@ export default function PopularCategories() {
           {popularCategories?.map((category: any) => (
             <div
               key={category.id}
-              className="w-full bg-slate-50 rounded-lg overflow-hidden"
+              className="w-full bg-slate-50 rounded-lg overflow-hidden border"
             >
               <Link
                 href={`/categories/${category.slug}`}

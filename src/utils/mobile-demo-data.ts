@@ -273,3 +273,81 @@ export const mobileItem = {
     },
   ],
 };
+
+export const allMobileBrandsName = [
+  {
+    id: 1,
+    name: "Apple",
+    img: "/images/apple.png",
+  },
+  {
+    id: 2,
+    name: "Samsung",
+    img: "/images/samsung.png",
+  },
+  {
+    id: 3,
+    name: "Google",
+    img: "/images/google.png",
+  },
+  {
+    id: 4,
+    name: "OnePlus",
+    img: "/images/oneplus.png",
+  },
+  {
+    id: 5,
+    name: "Xiaomi",
+    img: "/images/xiaomi.png",
+  },
+  {
+    id: 6,
+    name: "Huawei",
+    img: "/images/huawei.png",
+  },
+  {
+    id: 7,
+    name: "Oppo",
+    img: "/images/oppo.png",
+  },
+  {
+    id: 8,
+    name: "Vivo",
+    img: "/images/vivo.png",
+  },
+  {
+    id: 9,
+    name: "Sony",
+    img: "/images/sony.png",
+  },
+  {
+    id: 10,
+    name: "Nokia",
+    img: "/images/nokia.png",
+  },
+  {
+    id: 11,
+    name: "Realme",
+    img: "/images/realme.png",
+  },
+  {
+    id: 12,
+    name: "Motorola",
+    img: "/images/motorola.png",
+  },
+  {
+    id: 13,
+    name: "LG",
+    img: "/images/lg.png",
+  },
+  {
+    id: 14,
+    name: "Asus",
+    img: "/images/asus.png",
+  },
+  {
+    id: 15,
+    name: "Lenovo",
+    img: "/images/lenovo.png",
+  },
+];

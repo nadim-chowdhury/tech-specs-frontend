@@ -45,7 +45,7 @@ export default function BrandAllMobilesPage() {
 
       <div className="flex">
         {/* Filters Sidebar */}
-        <aside className="w-1/4 p-4 bg-gray-100 rounded-lg">
+        <aside className="w-1/4 p-4 bg-gray-100 rounded-lg border">
           <h2 className="text-xl font-bold mb-4">Filters</h2>
           <div className="mb-4">
             <label className="block mb-2 font-semibold">Brand</label>
@@ -123,7 +123,7 @@ export default function BrandAllMobilesPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
-              <div key={product.id} className="bg-slate-50 p-4 rounded-lg">
+              <div key={product.id} className="bg-slate-50 p-4 rounded-lg border">
                 <Image
                   src={product.image}
                   alt={product.name}

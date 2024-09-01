@@ -13,7 +13,7 @@ export default function FeaturedProducts() {
           {featuredProducts?.map((product: any) => (
             <div
               key={product.id}
-              className="bg-slate-50 p-6 rounded-lg flex flex-col justify-between transition-all duration-500 hover:bg-slate-100"
+              className="bg-slate-50 p-6 rounded-lg flex flex-col justify-between transition-all duration-500 hover:bg-slate-100 border"
             >
               <Image
                 src={product.image}

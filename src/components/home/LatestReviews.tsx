@@ -14,7 +14,7 @@ export default function LatestReviews() {
           {latestReviews?.map((review: any) => (
             <div
               key={review.id}
-              className="bg-slate-50 p-6 rounded-lg transition-all duration-500 hover:bg-slate-100 flex flex-col justify-between"
+              className="bg-slate-50 p-6 rounded-lg transition-all duration-500 hover:bg-slate-100 flex flex-col justify-between border"
             >
               <Image
                 src={review.img}

@@ -10,11 +10,11 @@ export default function TrendingArticles() {
           Trending Articles
         </h2>
 
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-2 gap-6">
           {trendingArticles?.map((article: any) => (
             <div
               key={article.id}
-              className="bg-slate-50 p-6 rounded-lg lg:flex lg:items-center gap-8 transition-all duration-500 hover:bg-slate-100"
+              className="bg-slate-50 p-6 rounded-lg lg:flex lg:items-center gap-8 transition-all duration-500 hover:bg-slate-100 border"
             >
               <Image
                 src={article.image}
