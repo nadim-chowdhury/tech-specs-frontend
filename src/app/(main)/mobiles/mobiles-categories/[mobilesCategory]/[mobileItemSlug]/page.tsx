@@ -1,9 +1,38 @@
-"use client";
+// "use client";
 
+import { apiFetch } from "@/lib/api-client";
 import { mobileItemSlugData } from "@/utils/mobile-demo-data";
 import Image from "next/image";
 
-export default function MobileItemSlugPage() {
+export default async function MobileItemSlugPage({ params }: any) {
+  // const getMobileItemData = async () => {
+  //   try {
+  //     const mobileData = await apiFetch<any>(
+  //       `/api/products/${params.mobileItemSlug}`,
+  //       {
+  //         method: "GET",
+  //       }
+  //     );
+  //     console.log("mobileData:", mobileData);
+
+  //     return {
+  //       props: {
+  //         mobileData,
+  //       },
+  //     };
+  //   } catch (error) {
+  //     console.error("Error fetching mobile data:", error);
+  //     return {
+  //       notFound: true,
+  //     };
+  //   }
+  // };
+
+  const res = await apiFetch(`/api/products/${params.mobileItemSlug}`, {
+    method: "GET",
+  });
+  console.log("res:", res);
+
   const {
     name,
     brand,
@@ -13,9 +42,9 @@ export default function MobileItemSlugPage() {
     keySpecs,
     detailedSpecs,
     reviews,
-    // price,
-    // tests,
-  } = mobileItemSlugData;
+  }: // price,
+  // tests,
+  any = res;
 
   return (
     <section className="container mx-auto">
@@ -26,9 +55,9 @@ export default function MobileItemSlugPage() {
           Brand: <span className="font-semibold">{brand}</span> | Release Date:{" "}
           <span className="font-semibold">{releaseDate}</span>
         </p>
-        <p className="text-yellow-500 text-lg">
+        {/* <p className="text-yellow-500 text-lg">
           Rating: {rating.toFixed(1)} / 5
-        </p>
+        </p> */}
       </div>
 
       <div className="grid grid-cols-4 gap-6">
@@ -39,10 +68,10 @@ export default function MobileItemSlugPage() {
           <div className="mb-8">
             <h2 className="text-2xl font-bold mb-4">Gallery</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {images.map((image, index) => (
+              {images.map((image: any, index: any) => (
                 <Image
                   key={index}
-                  src={image}
+                  src={image?.url}
                   width={1280}
                   height={720}
                   alt={`${name} Image ${index + 1}`}
@@ -79,15 +108,22 @@ export default function MobileItemSlugPage() {
                       </td>
                       <td className="p-2">
                         {Array.isArray(specValue)
-                          ? specValue.join(", ")
-                          : typeof specValue === "object"
-                          ? Object.entries(specValue)
-                              .map(
-                                ([key, value]) =>
-                                  `${key.toUpperCase()}: ${value}`
-                              )
+                          ? // Handle array values
+                            specValue.join(", ")
+                          : typeof specValue === "object" && specValue !== null
+                          ? // Handle object values
+                            Object.entries(specValue)
+                              .map(([key, value]) => {
+                                // Convert key to uppercase and value to string
+                                const formattedValue =
+                                  typeof value === "string"
+                                    ? value
+                                    : JSON.stringify(value);
+                                return `${key.toUpperCase()}: ${formattedValue}`;
+                              })
                               .join(" | ")
-                          : specValue.toString()}
+                          : // Handle primitive values
+                            String(specValue)}
                       </td>
                     </tr>
                   ))}
@@ -141,7 +177,7 @@ export default function MobileItemSlugPage() {
           <div className="">
             <h2 className="text-2xl font-bold mb-6">User Reviews</h2>
             <ul className="space-y-4">
-              {reviews.map((review) => (
+              {reviews.map((review: any) => (
                 <li
                   key={review.id}
                   className="bg-gray-50 p-4 rounded-lg border"
@@ -170,3 +206,25 @@ export default function MobileItemSlugPage() {
     </section>
   );
 }
+
+// Server-side function to fetch data
+// export const getServerSideProps: any = async (context: any) => {
+//   const { params } = context; // Destructure params from context
+
+//   try {
+//     const mobileData = await apiFetch<any>(`/api/products/${params.id}`, {
+//       method: "GET",
+//     });
+
+//     return {
+//       props: {
+//         mobileData,
+//       },
+//     };
+//   } catch (error) {
+//     console.error("Error fetching mobile data:", error);
+//     return {
+//       notFound: true, // Return notFound to show a 404 page
+//     };
+//   }
+// };
