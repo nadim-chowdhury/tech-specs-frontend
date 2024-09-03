@@ -4,6 +4,8 @@ import "./globals.css";
 import StoreProvider from "@/providers/store-provider";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import AnimatePresenceProvider from "@/providers/animate-presence-provider";
+// import TransitionsProvider from "@/providers/transitions-provider";
 // import Header from "@/components/Header";
 // import Footer from "@/components/Footer";
 // import { ThemeProvider } from "@/providers/theme-provider";
@@ -31,9 +33,13 @@ export default function RootLayout({
           disableTransitionOnChange
         > */}
         <StoreProvider>
-          <Header />
-          {children}
-          <Footer />
+          <AnimatePresenceProvider>
+            <Header />
+            {/* <TransitionsProvider> */}
+            {children}
+            {/* </TransitionsProvider> */}
+            <Footer />
+          </AnimatePresenceProvider>
         </StoreProvider>
         {/* </ThemeProvider> */}
       </body>

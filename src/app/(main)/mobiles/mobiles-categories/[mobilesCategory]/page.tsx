@@ -116,7 +116,8 @@ export default function BrandAllMobilesPage() {
                   width={150}
                   height={150}
                 />
-                <div className="p-6">
+
+                <div className="mt-4 px-6">
                   <h3 className="text-lg font-semibold text-slate-800 mb-2">
                     {product.name}
                   </h3>
@@ -125,7 +126,8 @@ export default function BrandAllMobilesPage() {
                     Storage: {product.storage}
                   </p>
                 </div>
-                <div className="p-6 mt-auto">
+
+                <div className="px-6 py-4 mt-auto">
                   <Link
                     href={`/mobiles/mobiles-categories/${product.brand.toLowerCase()}/${
                       product.id

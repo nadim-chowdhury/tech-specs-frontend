@@ -48,14 +48,14 @@ export default function AllMobilesPage() {
             </select>
           </div>
 
-          <div className="flex items-center justify-between mb-4">
+          {/* <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold">By Brands</h2>
             <Link href="/mobiles/mobiles-categories">
               <span className="text-slate-600">Show All</span>
             </Link>
-          </div>
+          </div> */}
 
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          {/* <div className="flex flex-wrap items-center justify-center gap-2">
             {allMobileBrandsName?.map((item) => (
               <Link
                 key={item.id}
@@ -73,7 +73,7 @@ export default function AllMobilesPage() {
                 </div>
               </Link>
             ))}
-          </div>
+          </div> */}
         </aside>
 
         {/* Product Grid */}
@@ -92,7 +92,7 @@ export default function AllMobilesPage() {
                 key={mobile.id}
                 className="bg-slate-50 rounded-lg overflow-hidden border flex flex-col justify-between"
               >
-                <div className="p-6">
+                <div className="">
                   <Image
                     src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt={mobile.name}
@@ -101,7 +101,7 @@ export default function AllMobilesPage() {
                     className="object-cover h-48 w-full rounded-md"
                   />
 
-                  <div className="mt-4">
+                  <div className="mt-4 px-6 pb-6">
                     <h2 className="text-lg font-semibold text-slate-800 mb-2">
                       {mobile.name}
                     </h2>

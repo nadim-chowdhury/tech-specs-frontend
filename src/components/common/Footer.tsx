@@ -89,7 +89,7 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 py-4 border-t border-slate-700 mt-12">
-          <h4 className="text-slate-400 font-medium uppercase text-center">
+          <h4 className="text-slate-400 font-medium text-center">
             &copy; 2024 TechSpecs. All Rights Reserved.
           </h4>
 
