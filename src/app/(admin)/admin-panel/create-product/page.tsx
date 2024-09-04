@@ -3,933 +3,692 @@
 import { useState } from "react";
 
 export default function CreateProduct() {
-  const [product, setProduct] = useState<any>({
-    name: "",
-    brand: "",
-    releaseDate: "",
-    rating: 0,
-    images: ["", "", ""],
-    keySpecs: {
-      processor: "",
-      ram: "",
-      storage: "",
-      display: "",
-      battery: "",
-      camera: "",
-    },
-    detailedSpecs: {
-      network: "",
-      dimensions: "",
-      weight: "",
-      build: "",
-      sim: "",
-      ipRating: "",
-      stylus: "",
-      displayType: "",
-      resolution: "",
-      protection: "",
-      alwaysOnDisplay: false,
-      os: "",
-      chipset: "",
-      cpu: "",
-      gpu: "",
-      memory: {
-        cardSlot: "",
-        internal: "",
-        ufs: "",
-      },
-      // mainCamera: {
-      //   quad: [],
-      //   features: "",
-      //   video: "",
-      // },
-      selfieCamera: {
-        single: "",
-        features: "",
-        video: "",
-      },
-      sound: {
-        loudspeaker: "",
-        jack: "",
-        audio: "",
-      },
-      comms: {
-        wlan: "",
-        bluetooth: "",
-        positioning: "",
-        nfc: "",
-        radio: "",
-        usb: "",
-      },
-      sensors: "",
-      additionalFeatures: "",
-      battery: {
-        type: "",
-        charging: "",
-      },
-      colors: [""],
-      models: [""],
-      sar: {
-        head: "",
-        body: "",
-        sarEu: {
-          head: "",
-          body: "",
-        },
-      },
-      price: {
-        usd: "",
-        eur: "",
-        gbp: "",
-        inr: "",
-      },
-      tests: {
-        performance: {
-          antutuV9: "",
-          antutuV10: "",
-          geekBenchV6: "",
-          markWildLife: "",
-        },
-        display: "",
-        camera: "",
-        loudspeaker: "",
-        battery: "",
-      },
-    },
-    // reviews: [
-    //   {
-    //     id: 1,
-    //     user: "",
-    //     rating: "",
-    //     comment: "",
-    //   },
-    // ],
-  });
+  const [name, setName] = useState("");
+  const [images, setImages] = useState<any>([]);
+  const [launchInfo, setLaunchInfo] = useState<any>({});
+  const [bodyInfo, setBodyInfo] = useState<any>({});
+  const [displayInfo, setDisplayInfo] = useState<any>({});
+  const [platformInfo, setPlatformInfo] = useState<any>({});
+  const [memoryInfo, setMemoryInfo] = useState<any>({});
+  const [cameraInfo, setCameraInfo] = useState<any>({});
+  const [soundInfo, setSoundInfo] = useState<any>({});
+  const [communicationsInfo, setCommunicationsInfo] = useState<any>({});
+  const [featuresInfo, setFeaturesInfo] = useState<any>({});
+  const [batteryInfo, setBatteryInfo] = useState<any>({});
+  const [misc, setMisc] = useState<any>({});
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setProduct({ ...product, [name]: value });
+  const handleNameChange = (e: any) => {
+    setName(e.target.value);
   };
 
-  // const handleNestedChange = (e: any, section: any, key: any) => {
-  //   const { name, value } = e.target;
-  //   setProduct({
-  //     ...product,
-  //     [section]: {
-  //       ...product[section],
-  //       [key]: { ...product[section][key], [name]: value },
-  //     },
-  //   });
-  // };
-
-  const handleNestedChange = (
-    e: React.ChangeEvent<HTMLInputElement>, // use a more specific type for the event
-    section: string,
-    key: string
-  ) => {
-    const { name, value } = e.target;
-    setProduct({
-      ...product,
-      [section]: {
-        ...product[section],
-        [key]: value, // Directly update the key with the new value
-      },
+  const handleImageChange = (index: any, value: any) => {
+    setImages((prevImages: any) => {
+      const newImages = [...prevImages];
+      newImages[index] = value;
+      return newImages;
     });
   };
 
-  const handleArrayChange = (e: any, section: any, index: any, key: any) => {
-    const { value } = e.target;
-
-    // Ensure that the key points to an array
-    const targetArray = product[section][key];
-    if (!Array.isArray(targetArray)) {
-      console.error(
-        `Expected an array at product[${section}][${key}], but found:`,
-        targetArray
-      );
-      return;
-    }
-
-    // Copy the existing array and update the specific index
-    const newArray = [...targetArray];
-    newArray[index] = value;
-
-    // Update the state with the new array
-    setProduct({
-      ...product,
-      [section]: {
-        ...product[section],
-        [key]: newArray,
-      },
-    });
+  const handleLaunchInfoChange = (e: any, key: any) => {
+    setLaunchInfo((prevLaunchInfo: any) => ({
+      ...prevLaunchInfo,
+      [key]: e.target.value,
+    }));
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    console.log("product------", product);
-
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/products`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+  const handleBodyInfoChange = (e: any, key: any, subKey: any) => {
+    setBodyInfo((prevBodyInfo: any) => {
+      if (subKey) {
+        return {
+          ...prevBodyInfo,
+          [key]: {
+            ...prevBodyInfo[key],
+            [subKey]: e.target.value,
           },
-          body: JSON.stringify(product),
-        }
-      );
-      if (res.ok) {
-        console.log("Product created successfully");
-        // Reset form or show success message
+        };
       } else {
-        console.error("Failed to create product");
-        console.log("res:", res);
+        return {
+          ...prevBodyInfo,
+          [key]: e.target.value,
+        };
       }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    });
+  };
+
+  const handleDisplayInfoChange = (e: any, key: any) => {
+    setDisplayInfo((prevDisplayInfo: any) => ({
+      ...prevDisplayInfo,
+      [key]: e.target.value,
+    }));
+  };
+
+  const handlePlatformInfoChange = (e: any, key: any) => {
+    setPlatformInfo((prevPlatformInfo: any) => ({
+      ...prevPlatformInfo,
+      [key]: e.target.value,
+    }));
+  };
+
+  const handleMemoryInfoChange = (e: any, key: any, subKey: any) => {
+    setMemoryInfo((prevMemoryInfo: any) => {
+      if (subKey) {
+        return {
+          ...prevMemoryInfo,
+          [key]: {
+            ...prevMemoryInfo[key],
+            [subKey]: e.target.value,
+          },
+        };
+      } else {
+        return {
+          ...prevMemoryInfo,
+          [key]: e.target.value,
+        };
+      }
+    });
+  };
+
+  const handleCameraInfoChange = (e: any, key: any, subKey: any) => {
+    setCameraInfo((prevCameraInfo: any) => {
+      if (subKey) {
+        return {
+          ...prevCameraInfo,
+          [key]: {
+            ...prevCameraInfo[key],
+            [subKey]: e.target.value,
+          },
+        };
+      } else {
+        return {
+          ...prevCameraInfo,
+          [key]: e.target.value,
+        };
+      }
+    });
+  };
+
+  const handleSoundInfoChange = (e: any, key: any) => {
+    setSoundInfo((prevSoundInfo: any) => ({
+      ...prevSoundInfo,
+      [key]: e.target.value,
+    }));
+  };
+
+  const handleMemoryArrayChange = (e: any, key: any, index: any) => {
+    setMemoryInfo((prevMemoryInfo: any) => {
+      const updatedArray = [...(prevMemoryInfo[key] || [])];
+      updatedArray[index] = e.target.value;
+      return {
+        ...prevMemoryInfo,
+        [key]: updatedArray,
+      };
+    });
+  };
+
+  const handleCameraArrayChange = (
+    e: any,
+    key: any,
+    subKey: any,
+    index: any
+  ) => {
+    setCameraInfo((prevCameraInfo: any) => {
+      const updatedArray = [...(prevCameraInfo[key][subKey] || [])];
+      updatedArray[index] = e.target.value;
+      return {
+        ...prevCameraInfo,
+        [key]: {
+          ...prevCameraInfo[key],
+          [subKey]: updatedArray,
+        },
+      };
+    });
+  };
+
+  const handleCommunicationsInfoChange = (e: any, key: any) => {
+    setCommunicationsInfo((prev: any) => ({
+      ...prev,
+      [key]: e.target.value,
+    }));
+  };
+
+  const handleFeaturesInfoChange = (e: any, key: any) => {
+    setFeaturesInfo((prev: any) => ({
+      ...prev,
+      [key]: e.target.value,
+    }));
+  };
+
+  const handleBatteryInfoChange = (e: any, key: any) => {
+    setBatteryInfo((prev: any) => ({
+      ...prev,
+      [key]: e.target.value,
+    }));
+  };
+
+  const handleMiscArrayChange = (e: any, key: any, index: any) => {
+    setMisc((prev: any) => {
+      const updatedArray = [...(prev[key] || [])];
+      updatedArray[index] = e.target.value;
+      return {
+        ...prev,
+        [key]: updatedArray,
+      };
+    });
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
   };
 
   return (
-    <section className="container mx-auto">
-      <div className="bg-slate-50 rounded-lg border p-6">
-        <h1 className="text-2xl font-bold mb-6">Create New Product</h1>
-        <form onSubmit={handleSubmit}>
-          {/* Basic Info */}
-          <div className="mb-6">
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={product.name}
-              onChange={handleChange}
-              className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Brand
-            </label>
-            <input
-              type="text"
-              name="brand"
-              value={product.brand}
-              onChange={handleChange}
-              className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Release Date
-            </label>
-            <input
-              type="date"
-              name="releaseDate"
-              value={product.releaseDate}
-              onChange={handleChange}
-              className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-              required
-            />
-          </div>
-          {/* <div className="mb-6">
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Rating
-            </label>
-            <input
-              type="number"
-              name="rating"
-              value={product.rating}
-              onChange={handleChange}
-              // step="0.1"
-              min={0}
-              max={5}
-              className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-              required
-            />
-          </div> */}
+    <section className="max-w-4xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-6">Create New Product</h1>
+      <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Device Name */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Device Name
+          </label>
+          <input
+            type="text"
+            value={name}
+            onChange={handleNameChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
 
-          {/* Images */}
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-2">Images</h2>
-            {product.images.map((image: any, index: any) => (
-              <div key={index} className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Image {index + 1}
-                </label>
-                <input
-                  type="text"
-                  name={`image-${index}`}
-                  value={image}
-                  onChange={(e) => {
-                    const newImages = [...product.images];
-                    newImages[index] = e.target.value;
-                    setProduct({ ...product, images: newImages });
-                  }}
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-            ))}
-          </div>
+        {/* Images */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Device Images
+          </label>
+          <input
+            type="text"
+            value={images.length > 0 ? images[0] : ""}
+            onChange={(e) => handleImageChange(0, e.target.value)}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+          <input
+            type="text"
+            value={images.length > 1 ? images[1] : ""}
+            onChange={(e) => handleImageChange(1, e.target.value)}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+          <input
+            type="text"
+            value={images.length > 2 ? images[2] : ""}
+            onChange={(e) => handleImageChange(3, e.target.value)}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
 
-          {/* Key Specs */}
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-2">Key Specs</h2>
-            <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium text-gray-700">
-                Processor
+        {/* Launch Information */}
+        <div>
+          <h2 className="text-lg font-medium">Launch Information</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Announced
               </label>
               <input
-                type="text"
-                name="processor"
-                value={product.keySpecs.processor}
-                onChange={(e) => handleNestedChange(e, "keySpecs", "processor")}
-                className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
+                type="date"
+                value={launchInfo?.announced}
+                onChange={(e) => handleLaunchInfoChange(e, "announced")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-            <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium text-gray-700">
-                RAM
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Status
               </label>
               <input
                 type="text"
-                name="ram"
-                value={product.keySpecs.ram}
-                onChange={(e) => handleNestedChange(e, "keySpecs", "ram")}
-                className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
+                value={launchInfo?.status}
+                onChange={(e) => handleLaunchInfoChange(e, "status")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-            <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium text-gray-700">
-                Storage
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Release Date
               </label>
               <input
-                type="text"
-                name="storage"
-                value={product.keySpecs.storage}
-                onChange={(e) => handleNestedChange(e, "keySpecs", "storage")}
-                className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium text-gray-700">
-                Display
-              </label>
-              <input
-                type="text"
-                name="display"
-                value={product.keySpecs.display}
-                onChange={(e) => handleNestedChange(e, "keySpecs", "display")}
-                className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium text-gray-700">
-                Battery
-              </label>
-              <input
-                type="text"
-                name="battery"
-                value={product.keySpecs.battery}
-                onChange={(e) => handleNestedChange(e, "keySpecs", "battery")}
-                className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium text-gray-700">
-                Camera
-              </label>
-              <input
-                type="text"
-                name="camera"
-                value={product.keySpecs.camera}
-                onChange={(e) => handleNestedChange(e, "keySpecs", "camera")}
-                className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
+                type="date"
+                value={launchInfo?.release_date}
+                onChange={(e) => handleLaunchInfoChange(e, "release_date")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
           </div>
+        </div>
 
-          {/* Detailed Specs */}
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-2">Detailed Specs</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Network
-                </label>
-                <input
-                  type="text"
-                  name="network"
-                  value={product.detailedSpecs.network}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "network")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Dimensions
-                </label>
-                <input
-                  type="text"
-                  name="dimensions"
-                  value={product.detailedSpecs.dimensions}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "dimensions")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Weight
-                </label>
-                <input
-                  type="text"
-                  name="weight"
-                  value={product.detailedSpecs.weight}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "weight")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Build
-                </label>
-                <input
-                  type="text"
-                  name="build"
-                  value={product.detailedSpecs.build}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "build")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  SIM
-                </label>
-                <input
-                  type="text"
-                  name="sim"
-                  value={product.detailedSpecs.sim}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "sim")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              {/* <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  IP Rating
-                </label>
-                <input
-                  type="text"
-                  name="ipRating"
-                  value={product.detailedSpecs.ipRating}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "ipRating")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div> */}
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Stylus
-                </label>
-                <input
-                  type="text"
-                  name="stylus"
-                  value={product.detailedSpecs.stylus}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "stylus")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Display Type
-                </label>
-                <input
-                  type="text"
-                  name="displayType"
-                  value={product.detailedSpecs.displayType}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "displayType")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Resolution
-                </label>
-                <input
-                  type="text"
-                  name="resolution"
-                  value={product.detailedSpecs.resolution}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "resolution")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Protection
-                </label>
-                <input
-                  type="text"
-                  name="protection"
-                  value={product.detailedSpecs.protection}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "protection")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              {/* <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium text-gray-700">
-                Always On Display
+        {/* Body Information */}
+        <div>
+          <h2 className="text-lg font-medium">Body Information</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Dimensions
               </label>
               <input
-                type="checkbox"
-                name="alwaysOnDisplay"
-                checked={product.detailedSpecs.alwaysOnDisplay}
+                type="text"
+                value={bodyInfo.dimensions || ""}
+                onChange={(e) => handleBodyInfoChange(e, "dimensions", "")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Weight
+              </label>
+              <input
+                type="text"
+                value={bodyInfo.weight || ""}
+                onChange={(e) => handleBodyInfoChange(e, "weight", "")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Build (Front/Back/Frame)
+              </label>
+              <input
+                type="text"
+                value={bodyInfo.build?.front || ""}
+                onChange={(e) => handleBodyInfoChange(e, "build", "front")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+              <input
+                type="text"
+                value={bodyInfo.build?.back || ""}
+                onChange={(e) => handleBodyInfoChange(e, "build", "back")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+              <input
+                type="text"
+                value={bodyInfo.build?.frame || ""}
+                onChange={(e) => handleBodyInfoChange(e, "build", "frame")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                SIM Type
+              </label>
+              <input
+                type="text"
+                value={bodyInfo.sim?.type || ""}
+                onChange={(e) => handleBodyInfoChange(e, "sim", "type")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+              <label className="block text-sm font-medium text-gray-700 mt-4">
+                Additional SIM Features
+              </label>
+              <input
+                type="text"
+                value={bodyInfo.sim?.additional_features || ""}
                 onChange={(e) =>
-                  handleNestedChange(e, "detailedSpecs", "alwaysOnDisplay")
+                  handleBodyInfoChange(e, "sim", "additional_features")
                 }
-                className="block p-2 border rounded-md focus:ring focus:ring-blue-500"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
-            </div> */}
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Operating System
-                </label>
-                <input
-                  type="text"
-                  name="os"
-                  value={product.detailedSpecs.os}
-                  onChange={(e) => handleNestedChange(e, "detailedSpecs", "os")}
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Chipset
-                </label>
-                <input
-                  type="text"
-                  name="chipset"
-                  value={product.detailedSpecs.chipset}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "chipset")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  CPU
-                </label>
-                <input
-                  type="text"
-                  name="cpu"
-                  value={product.detailedSpecs.cpu}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "cpu")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  GPU
-                </label>
-                <input
-                  type="text"
-                  name="gpu"
-                  value={product.detailedSpecs.gpu}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "gpu")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-              {/* Add more fields for detailedSpecs here */}
-
-              {/* Memory Section */}
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold mb-2">Memory</h3>
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Card Slot
-                </label>
-                <input
-                  type="text"
-                  name="cardSlot"
-                  value={product.detailedSpecs.memory.cardSlot}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "memory.cardSlot")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Internal Storage
-                </label>
-                <input
-                  type="text"
-                  name="internal"
-                  value={product.detailedSpecs.memory.internal}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "memory.internal")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  UFS
-                </label>
-                <input
-                  type="text"
-                  name="ufs"
-                  value={product.detailedSpecs.memory.ufs}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "memory.ufs")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-
-              {/* Main Camera Section */}
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold mb-2">Main Camera</h3>
-                {/* {product.detailedSpecs.mainCamera.quad.map(
-                  (camera: any, index: any) => (
-                    <div key={index} className="mb-4">
-                      <label className="block mb-2 text-sm font-medium text-gray-700">
-                        Camera {index + 1}
-                      </label>
-                      <input
-                        type="text"
-                        name={`camera-${index}`}
-                        value={camera}
-                        onChange={(e) =>
-                          handleArrayChange(
-                            e,
-                            "detailedSpecs",
-                            index,
-                            "mainCamera.quad"
-                          )
-                        }
-                        className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                      />
-                    </div>
-                  )
-                )} */}
-                {/* <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Features
-                </label>
-                <input
-                  type="text"
-                  name="features"
-                  value={product.detailedSpecs.mainCamera.features}
-                  onChange={(e) =>
-                    handleNestedChange(
-                      e,
-                      "detailedSpecs",
-                      "mainCamera.features"
-                    )
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Video
-                </label>
-                <input
-                  type="text"
-                  name="video"
-                  value={product.detailedSpecs.mainCamera.video}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "mainCamera.video")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                /> */}
-              </div>
-
-              {/* Selfie Camera Section */}
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold mb-2">Selfie Camera</h3>
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Single
-                </label>
-                <input
-                  type="text"
-                  name="single"
-                  value={product.detailedSpecs.selfieCamera.single}
-                  onChange={(e) =>
-                    handleNestedChange(
-                      e,
-                      "detailedSpecs",
-                      "selfieCamera.single"
-                    )
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Features
-                </label>
-                <input
-                  type="text"
-                  name="features"
-                  value={product.detailedSpecs.selfieCamera.features}
-                  onChange={(e) =>
-                    handleNestedChange(
-                      e,
-                      "detailedSpecs",
-                      "selfieCamera.features"
-                    )
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Video
-                </label>
-                <input
-                  type="text"
-                  name="video"
-                  value={product.detailedSpecs.selfieCamera.video}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "selfieCamera.video")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-
-              {/* Sound Section */}
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold mb-2">Sound</h3>
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Loudspeaker
-                </label>
-                <input
-                  type="text"
-                  name="loudspeaker"
-                  value={product.detailedSpecs.sound.loudspeaker}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "sound.loudspeaker")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  3.5mm Jack
-                </label>
-                <input
-                  type="text"
-                  name="jack"
-                  value={product.detailedSpecs.sound.jack}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "sound.jack")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Audio
-                </label>
-                <input
-                  type="text"
-                  name="audio"
-                  value={product.detailedSpecs.sound.audio}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "sound.audio")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-
-              {/* Comms Section */}
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold mb-2">Comms</h3>
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  WLAN
-                </label>
-                <input
-                  type="text"
-                  name="wlan"
-                  value={product.detailedSpecs.comms.wlan}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "comms.wlan")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Bluetooth
-                </label>
-                <input
-                  type="text"
-                  name="bluetooth"
-                  value={product.detailedSpecs.comms.bluetooth}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "comms.bluetooth")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Positioning
-                </label>
-                <input
-                  type="text"
-                  name="positioning"
-                  value={product.detailedSpecs.comms.positioning}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "comms.positioning")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  NFC
-                </label>
-                <input
-                  type="text"
-                  name="nfc"
-                  value={product.detailedSpecs.comms.nfc}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "comms.nfc")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Radio
-                </label>
-                <input
-                  type="text"
-                  name="radio"
-                  value={product.detailedSpecs.comms.radio}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "comms.radio")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  USB
-                </label>
-                <input
-                  type="text"
-                  name="usb"
-                  value={product.detailedSpecs.comms.usb}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "comms.usb")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-
-              {/* Sensors Section */}
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Sensors
-                </label>
-                <input
-                  type="text"
-                  name="sensors"
-                  value={product.detailedSpecs.sensors}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "sensors")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-
-              {/* Additional Features Section */}
-              <div className="mb-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Additional Features
-                </label>
-                <input
-                  type="text"
-                  name="additionalFeatures"
-                  value={product.detailedSpecs.additionalFeatures}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "additionalFeatures")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
-
-              {/* Battery Section */}
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold mb-2">Battery</h3>
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Type
-                </label>
-                <input
-                  type="text"
-                  name="type"
-                  value={product.detailedSpecs.battery.type}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "battery.type")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Charging
-                </label>
-                <input
-                  type="text"
-                  name="charging"
-                  value={product.detailedSpecs.battery.charging}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "battery.charging")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Standby
-                </label>
-                <input
-                  type="text"
-                  name="standby"
-                  value={product.detailedSpecs.battery.standby}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "battery.standby")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Talk Time
-                </label>
-                <input
-                  type="text"
-                  name="talkTime"
-                  value={product.detailedSpecs.battery.talkTime}
-                  onChange={(e) =>
-                    handleNestedChange(e, "detailedSpecs", "battery.talkTime")
-                  }
-                  className="block w-full p-2 border rounded-md focus:ring focus:ring-blue-500"
-                />
-              </div>
             </div>
           </div>
+        </div>
 
-          {/* Buttons */}
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-            >
-              Submit
-            </button>
+        {/* Display Information */}
+        <div>
+          <h2 className="text-lg font-medium">Display Information</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Display Type
+              </label>
+              <input
+                type="text"
+                value={displayInfo.type || ""}
+                onChange={(e) => handleDisplayInfoChange(e, "type")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Size
+              </label>
+              <input
+                type="text"
+                value={displayInfo.size || ""}
+                onChange={(e) => handleDisplayInfoChange(e, "size")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Resolution
+              </label>
+              <input
+                type="text"
+                value={displayInfo.resolution || ""}
+                onChange={(e) => handleDisplayInfoChange(e, "resolution")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Protection
+              </label>
+              <input
+                type="text"
+                value={displayInfo.protection || ""}
+                onChange={(e) => handleDisplayInfoChange(e, "protection")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
           </div>
-        </form>
-      </div>
+        </div>
+
+        {/* Platform Information */}
+        <div>
+          <h2 className="text-lg font-medium">Platform Information</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                OS
+              </label>
+              <input
+                type="text"
+                value={platformInfo.os || ""}
+                onChange={(e) => handlePlatformInfoChange(e, "os")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Chipset
+              </label>
+              <input
+                type="text"
+                value={platformInfo.chipset || ""}
+                onChange={(e) => handlePlatformInfoChange(e, "chipset")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                CPU
+              </label>
+              <input
+                type="text"
+                value={platformInfo.cpu || ""}
+                onChange={(e) => handlePlatformInfoChange(e, "cpu")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                GPU
+              </label>
+              <input
+                type="text"
+                value={platformInfo.gpu || ""}
+                onChange={(e) => handlePlatformInfoChange(e, "gpu")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Memory Information */}
+        <div>
+          <h2 className="text-lg font-medium">Memory Information</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Internal Storage Options
+              </label>
+
+              <input
+                type="text"
+                // value={option}
+                onChange={(e) => handleMemoryArrayChange(e, "internal", 0)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Card Slot
+              </label>
+              <input
+                type="text"
+                value={memoryInfo.card_slot || ""}
+                onChange={(e) => handleMemoryInfoChange(e, "card_slot", "")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Camera Information */}
+        <div>
+          <h2 className="text-lg font-medium">Camera Information</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Main Camera
+              </label>
+              <input
+                type="text"
+                // value={feature}
+                onChange={(e) =>
+                  handleCameraArrayChange(e, "main", "features", 0)
+                }
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Selfie Camera
+              </label>
+              <input
+                type="text"
+                // value={feature}
+                onChange={(e) =>
+                  handleCameraArrayChange(e, "selfie", "features", 0)
+                }
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Sound Information */}
+        <div>
+          <h2 className="text-lg font-medium">Sound Information</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Loudspeaker
+              </label>
+              <input
+                type="text"
+                value={soundInfo.loudspeaker || ""}
+                onChange={(e) => handleSoundInfoChange(e, "loudspeaker")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                3.5mm Jack
+              </label>
+              <input
+                type="text"
+                value={soundInfo.jack || ""}
+                onChange={(e) => handleSoundInfoChange(e, "jack")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Communications Information */}
+        <div>
+          <h2 className="text-lg font-medium">Communications Information</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                WLAN
+              </label>
+              <input
+                type="text"
+                value={communicationsInfo.wlan || ""}
+                onChange={(e) => handleCommunicationsInfoChange(e, "wlan")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Bluetooth
+              </label>
+              <input
+                type="text"
+                value={communicationsInfo.bluetooth || ""}
+                onChange={(e) => handleCommunicationsInfoChange(e, "bluetooth")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                GPS
+              </label>
+              <input
+                type="text"
+                value={communicationsInfo.gps || ""}
+                onChange={(e) => handleCommunicationsInfoChange(e, "gps")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                NFC
+              </label>
+              <input
+                type="text"
+                value={featuresInfo.nfc || ""}
+                onChange={(e) => handleFeaturesInfoChange(e, "nfc")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Radio
+              </label>
+              <input
+                type="text"
+                value={featuresInfo.radio || ""}
+                onChange={(e) => handleFeaturesInfoChange(e, "radio")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                USB
+              </label>
+              <input
+                type="text"
+                value={featuresInfo.usb || ""}
+                onChange={(e) => handleFeaturesInfoChange(e, "usb")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Features Information */}
+        <div>
+          <h2 className="text-lg font-medium">Features Information</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Sensors
+              </label>
+              <input
+                type="text"
+                value={featuresInfo.sensors || ""}
+                onChange={(e) => handleFeaturesInfoChange(e, "sensors")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Battery Information */}
+        <div>
+          <h2 className="text-lg font-medium">Battery Information</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Battery Type
+              </label>
+              <input
+                type="text"
+                value={batteryInfo.type || ""}
+                onChange={(e) => handleBatteryInfoChange(e, "type")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Charging
+              </label>
+              <input
+                type="text"
+                value={batteryInfo.charging || ""}
+                onChange={(e) => handleBatteryInfoChange(e, "charging")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Misc Information */}
+        <div>
+          <h2 className="text-lg font-medium">Miscellaneous Information</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Colors
+              </label>
+              <input
+                type="text"
+                // value={color || ""}
+                onChange={(e) => handleMiscArrayChange(e, "colors", 0)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Models
+              </label>
+              <input
+                type="text"
+                // value={model || ""}
+                onChange={(e) => handleMiscArrayChange(e, "models", 1)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <div>
+          <button
+            type="submit"
+            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Create Product
+          </button>
+        </div>
+      </form>
     </section>
   );
 }
