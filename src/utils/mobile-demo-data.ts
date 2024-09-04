@@ -492,3 +492,161 @@ export const mobileItemSlugData = {
     },
   ],
 };
+
+export const mobileItemSlugData2 = {
+  device: {
+    name: "Google Pixel 9 Pro",
+    images: [
+      "https://images.unsplash.com/photo-1490222939321-2a267366a124?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1541560052-3744e48ab80b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1513595207829-9f414c0665f6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    ],
+    launch: {
+      announced: "2024-08-13",
+      status: "Coming soon",
+      release_date: "2024-09-09",
+    },
+    body: {
+      dimensions: "152.8 x 72 x 8.5 mm",
+      weight: "199 g",
+      build: {
+        front: "Gorilla Glass Victus 2",
+        back: "Gorilla Glass Victus 2",
+        frame: "Aluminum",
+      },
+      sim: {
+        type: "Nano-SIM and eSIM",
+        additional_features:
+          "IP68 dust/water resistant (up to 1.5m for 30 min)",
+      },
+    },
+    display: {
+      type: "LTPO OLED",
+      features: ["120Hz", "HDR10+", "2000 nits (HBM)", "3000 nits (peak)"],
+      size: "6.3 inches",
+      resolution: "1280 x 2856 pixels",
+      protection: "Corning Gorilla Glass Victus 2",
+      additional_features: "Always-on display",
+    },
+    platform: {
+      os: "Android 14",
+      updates: "Up to 7 major Android upgrades",
+      chipset: "Google Tensor G4 (4 nm)",
+      cpu: "Octa-core (1x3.1 GHz Cortex-X4 & 3x2.6 GHz Cortex-A720 & 4x1.92 GHz Cortex-A520)",
+      gpu: "Mali-G715 MC7",
+    },
+    memory: {
+      card_slot: "No",
+      internal: [
+        "128GB 16GB RAM",
+        "256GB 16GB RAM",
+        "512GB 16GB RAM",
+        "1TB 16GB RAM",
+      ],
+      type: "UFS 3.1",
+    },
+    camera: {
+      main_camera: {
+        setup: "Triple",
+        modules: [
+          {
+            megapixels: "50 MP",
+            aperture: "f/1.7",
+            lens: "25mm (wide)",
+            sensor_size: '1/1.31"',
+            pixel_size: "1.2µm",
+            features: ["dual pixel PDAF", "OIS"],
+          },
+          {
+            megapixels: "48 MP",
+            aperture: "f/2.8",
+            lens: "113mm (periscope telephoto)",
+            sensor_size: '1/2.55"',
+            features: ["dual pixel PDAF", "OIS", "5x optical zoom"],
+          },
+          {
+            megapixels: "48 MP",
+            aperture: "f/1.7",
+            lens: "123˚ (ultrawide)",
+            sensor_size: '1/2.55"',
+            features: ["dual pixel PDAF"],
+          },
+        ],
+        features: [
+          "Multi-zone Laser AF",
+          "LED flash",
+          "Pixel Shift",
+          "Ultra-HDR",
+          "panorama",
+          "Best Take",
+          "Zoom Enhance",
+        ],
+        video: [
+          "8K@30fps",
+          "4K@24/30/60fps",
+          "1080p@24/30/60/120/240fps",
+          "gyro-EIS",
+          "OIS",
+          "10-bit HDR",
+        ],
+      },
+      selfie_camera: {
+        setup: "Single",
+        megapixels: "42 MP",
+        aperture: "f/2.2",
+        lens: "17mm (ultrawide)",
+        features: ["PDAF", "Auto-HDR", "panorama"],
+        video: ["4K@30/60fps", "1080p@30/60fps"],
+      },
+    },
+    sound: {
+      loudspeaker: "Yes, with stereo speakers",
+      audio_jack: "No",
+    },
+    comms: {
+      wlan: "Wi-Fi 802.11 a/b/g/n/ac/6e/7, tri-band",
+      bluetooth: "5.3, A2DP, LE, aptX HD",
+      gps: "GPS (L1+L5), GLONASS, GALILEO, BDS, QZSS, NavIC",
+      nfc: "Yes",
+      radio: "No",
+      usb: "USB Type-C 3.2",
+    },
+    features: {
+      sensors: [
+        "Fingerprint (under display, ultrasonic)",
+        "accelerometer",
+        "gyro",
+        "proximity",
+        "compass",
+        "barometer",
+        "thermometer (skin temperature)",
+      ],
+      additional_features: [
+        "Ultra Wideband (UWB) support",
+        "Satellite SOS service",
+        "Circle to Search",
+      ],
+    },
+    battery: {
+      type: "Li-Ion 4700 mAh, non-removable",
+      charging: {
+        wired: "27W wired, PD3.0, PPS, 55% in 30 min (advertised)",
+        wireless: ["21W (w/ Pixel Stand)", "12W (w/ Qi compatible charger)"],
+        reverse_wireless: "Yes",
+      },
+    },
+    misc: {
+      colors: ["Porcelain", "Rose Quartz", "Hazel", "Obsidian"],
+      models: ["GR83Y", "GEC77", "GWVK6"],
+      sar_eu: {
+        head: "0.99 W/kg",
+        body: "1.37 W/kg",
+      },
+      price: {
+        usd: "$999.00",
+        eur: "€1,099.00",
+        gbp: "£999.00",
+      },
+    },
+  },
+};

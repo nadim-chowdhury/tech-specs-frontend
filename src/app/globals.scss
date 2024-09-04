@@ -74,3 +74,22 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
+
+// .mobile-details-table-tag {
+//   @apply table-auto text-left mobile-device-details-table text-xs md:text-base border-collapse;
+// }
+
+// .mobile-device-details-table th {
+//   @apply px-4 md:px-6 py-2;
+// }
+// .mobile-device-details-table tr th:first-of-type {
+//   @apply border;
+// }
+
+.mobile-device-details-table td {
+  @apply px-4 md:px-6 py-1 border;
+}
+
+.mobile-device-details-table tr td:first-of-type {
+  @apply bg-slate-50 md:pr-8;
+}
