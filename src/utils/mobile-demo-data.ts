@@ -650,3 +650,90 @@ export const mobileItemSlugData2 = {
     },
   },
 };
+
+const mobileDemoData = {
+  id: 4,
+  name: "Est blanditiis dolor",
+  brand: "Et reiciendis sed pr",
+  slug: "est-blanditiis-dolor",
+  launch: {
+    status: "In eum aliqua Optio",
+    announced: "2006-03-09",
+    release_date: "1970-03-14",
+  },
+  body: {
+    sim: {
+      type: "Facilis illo consequ",
+      additional_features: "Eiusmod quis dolore ",
+    },
+    build: {
+      back: "Soluta id culpa ali",
+      frame: "Perspiciatis eos q",
+      front: "Minus quia cumque au",
+    },
+    weight: "Labore quidem blandi",
+    dimensions: "Dicta aut repellendu",
+  },
+  display: {
+    size: "Accusamus incidunt ",
+    type: "Quis ad quaerat opti",
+    protection: "Omnis voluptas ex qu",
+    resolution: "Nihil accusantium vo",
+  },
+  platform: {
+    os: "Officia quasi delect",
+    cpu: "Molestiae adipisci f",
+    gpu: "Cum dolores porro so",
+    chipset: "Laborum dolore et cu",
+  },
+  memory: {
+    internal: [
+      "In eius iure ratione",
+      "Velit velit quasi am",
+      "Velit dolorem eligen",
+      "Non error est alias ",
+    ],
+    card_slot: "Rerum anim maxime la",
+  },
+  camera: {
+    main: {
+      modules: ["Esse voluptas sunt l"],
+    },
+    selfie: {
+      modules: ["Amet facere cumque "],
+    },
+  },
+  sound: {
+    jack: "Quia laudantium vel",
+    loudspeaker: "Ut distinctio Quasi",
+  },
+  comms: {
+    gps: "Laborum voluptas est",
+    wlan: "Eiusmod omnis duis i",
+    bluetooth: "Enim explicabo Aut ",
+  },
+  features: {
+    nfc: "Harum non dolore rem",
+    usb: "Irure nisi culpa do",
+    radio: "Iusto laudantium ni",
+    sensors: "Ut iusto voluptate i",
+  },
+  battery: {
+    type: "Sint asperiores dolo",
+    charging: "Cum ad quam irure ad",
+  },
+  misc: {
+    colors: [
+      "Esse incidunt rem t",
+      "Consequatur culpa o",
+      "Est iure quis fuga ",
+    ],
+    models: [
+      "Duis debitis debitis",
+      "Quisquam nesciunt i",
+      "Voluptatibus quam in",
+    ],
+  },
+  createdAt: "2024-09-05T10:13:45.249Z",
+  updatedAt: "2024-09-05T10:13:45.249Z",
+};

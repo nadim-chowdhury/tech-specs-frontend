@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateProduct() {
   const [name, setName] = useState("");
+  const [brand, setBrand] = useState("");
   const [images, setImages] = useState<any>([]);
   const [launchInfo, setLaunchInfo] = useState<any>({});
   const [bodyInfo, setBodyInfo] = useState<any>({});
@@ -19,6 +22,10 @@ export default function CreateProduct() {
 
   const handleNameChange = (e: any) => {
     setName(e.target.value);
+  };
+
+  const handleBrandChange = (e: any) => {
+    setBrand(e.target.value);
   };
 
   const handleImageChange = (index: any, value: any) => {
@@ -132,12 +139,16 @@ export default function CreateProduct() {
     index: any
   ) => {
     setCameraInfo((prevCameraInfo: any) => {
-      const updatedArray = [...(prevCameraInfo[key][subKey] || [])];
+      const keyExists = prevCameraInfo[key] || {};
+      const subKeyExists = keyExists[subKey] || [];
+
+      const updatedArray = [...subKeyExists];
       updatedArray[index] = e.target.value;
+
       return {
         ...prevCameraInfo,
         [key]: {
-          ...prevCameraInfo[key],
+          ...keyExists,
           [subKey]: updatedArray,
         },
       };
@@ -176,13 +187,67 @@ export default function CreateProduct() {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/mobile`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: name,
+            brand: brand,
+            images: images,
+            launch: launchInfo,
+            body: bodyInfo,
+            display: displayInfo,
+            platform: platformInfo,
+            memory: memoryInfo,
+            camera: cameraInfo,
+            sound: soundInfo,
+            comms: communicationsInfo,
+            featurs: featuresInfo,
+            battery: batteryInfo,
+            misc: misc,
+          }),
+        }
+      );
+      if (res.ok) {
+        toast.success("Mobile created successfully!");
+        resetForm();
+      } else {
+        toast.error("Failed to create mobile");
+        console.error("res:", res);
+      }
+    } catch (error) {
+      toast.error("Error occurred while creating mobile");
+      console.error("Error:", error);
+    }
   };
 
+  const resetForm = () => {
+    setName("");
+    setBrand("");
+    setImages([]);
+    setLaunchInfo({});
+    setBodyInfo({});
+    setDisplayInfo({});
+    setPlatformInfo({});
+    setMemoryInfo({});
+    setCameraInfo({});
+    setSoundInfo({});
+    setCommunicationsInfo({});
+    setFeaturesInfo({});
+    setBatteryInfo({});
+    setMisc({});
+  };
   return (
     <section className="max-w-4xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Create New Product</h1>
+      <h1 className="text-2xl font-bold mb-6">Create New Mobile</h1>
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Device Name */}
         <div>
@@ -193,6 +258,19 @@ export default function CreateProduct() {
             type="text"
             value={name}
             onChange={handleNameChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+
+        {/* Device Brand */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Device Brand
+          </label>
+          <input
+            type="text"
+            value={name}
+            onChange={handleBrandChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
@@ -217,7 +295,7 @@ export default function CreateProduct() {
           <input
             type="text"
             value={images.length > 2 ? images[2] : ""}
-            onChange={(e) => handleImageChange(3, e.target.value)}
+            onChange={(e) => handleImageChange(2, e.target.value)}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
@@ -446,11 +524,28 @@ export default function CreateProduct() {
               <label className="block text-sm font-medium text-gray-700">
                 Internal Storage Options
               </label>
-
               <input
                 type="text"
                 // value={option}
                 onChange={(e) => handleMemoryArrayChange(e, "internal", 0)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+              <input
+                type="text"
+                // value={option}
+                onChange={(e) => handleMemoryArrayChange(e, "internal", 1)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+              <input
+                type="text"
+                // value={option}
+                onChange={(e) => handleMemoryArrayChange(e, "internal", 2)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+              <input
+                type="text"
+                // value={option}
+                onChange={(e) => handleMemoryArrayChange(e, "internal", 3)}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -480,7 +575,7 @@ export default function CreateProduct() {
                 type="text"
                 // value={feature}
                 onChange={(e) =>
-                  handleCameraArrayChange(e, "main", "features", 0)
+                  handleCameraArrayChange(e, "main", "modules", 0)
                 }
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
@@ -493,7 +588,7 @@ export default function CreateProduct() {
                 type="text"
                 // value={feature}
                 onChange={(e) =>
-                  handleCameraArrayChange(e, "selfie", "features", 0)
+                  handleCameraArrayChange(e, "selfie", "modules", 0)
                 }
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
@@ -664,6 +759,18 @@ export default function CreateProduct() {
                 onChange={(e) => handleMiscArrayChange(e, "colors", 0)}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
+              <input
+                type="text"
+                // value={color || ""}
+                onChange={(e) => handleMiscArrayChange(e, "colors", 1)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+              <input
+                type="text"
+                // value={color || ""}
+                onChange={(e) => handleMiscArrayChange(e, "colors", 2)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -672,7 +779,19 @@ export default function CreateProduct() {
               <input
                 type="text"
                 // value={model || ""}
+                onChange={(e) => handleMiscArrayChange(e, "models", 0)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+              <input
+                type="text"
+                // value={model || ""}
                 onChange={(e) => handleMiscArrayChange(e, "models", 1)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+              <input
+                type="text"
+                // value={model || ""}
+                onChange={(e) => handleMiscArrayChange(e, "models", 2)}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -685,7 +804,7 @@ export default function CreateProduct() {
             type="submit"
             className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Create Product
+            Create Mobile
           </button>
         </div>
       </form>

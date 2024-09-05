@@ -1,7 +1,7 @@
 export interface FetchOptions {
   method?: string;
   headers?: Record<string, string>;
-  body?: any; // use specific type if you know the structure
+  body?: any;
 }
 
 export async function apiFetch<T>(
@@ -21,7 +21,7 @@ export async function apiFetch<T>(
       ...(body && { body: JSON.stringify(body) }),
     }
   );
-  console.log("response---------", response);
+  console.log("response", response);
 
   if (!response.ok) {
     const error = await response.json();

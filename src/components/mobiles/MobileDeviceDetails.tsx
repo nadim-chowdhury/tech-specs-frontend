@@ -1,14 +1,12 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import Image from "next/image";
-import MobileDetailsImageSlider from "./MobileDetailsImageSlider";
 
 export default function MobileDeviceDetails({ device }: any) {
   return (
@@ -110,9 +108,7 @@ export default function MobileDeviceDetails({ device }: any) {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Others:
-            </TableCell>
+            <TableCell className="font-medium text-gray-700">Others:</TableCell>
             <TableCell className="text-gray-700">
               {device?.body?.sim?.additional_features}
             </TableCell>
@@ -160,9 +156,7 @@ export default function MobileDeviceDetails({ device }: any) {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Others:
-            </TableCell>
+            <TableCell className="font-medium text-gray-700">Others:</TableCell>
             <TableCell className="text-gray-700">
               {device?.display?.additional_features}
             </TableCell>
@@ -441,13 +435,11 @@ export default function MobileDeviceDetails({ device }: any) {
               Sensors:
             </TableCell>
             <TableCell className="text-gray-700">
-              {device?.features?.sensors?.join(", ")}
+              {/* {device?.features?.sensors?.join(", ")} */}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Others:
-            </TableCell>
+            <TableCell className="font-medium text-gray-700">Others:</TableCell>
             <TableCell className="text-gray-700">
               {device?.features?.additional_features?.join(", ")}
             </TableCell>
@@ -520,46 +512,6 @@ export default function MobileDeviceDetails({ device }: any) {
             <TableCell className="font-medium text-gray-700">Models:</TableCell>
             <TableCell className="text-gray-700">
               {device?.misc?.models?.join(", ")}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              SAR EU Head:
-            </TableCell>
-            <TableCell className="text-gray-700">
-              {device?.misc?.sar_eu?.head}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              SAR EU Body:
-            </TableCell>
-            <TableCell className="text-gray-700">
-              {device?.misc?.sar_eu?.body}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Price (USD):
-            </TableCell>
-            <TableCell className="text-gray-700">
-              {device?.misc?.price?.usd}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Price (EUR):
-            </TableCell>
-            <TableCell className="text-gray-700">
-              {device?.misc?.price?.eur}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Price (GBP):
-            </TableCell>
-            <TableCell className="text-gray-700">
-              {device?.misc?.price?.gbp}
             </TableCell>
           </TableRow>
         </TableBody>

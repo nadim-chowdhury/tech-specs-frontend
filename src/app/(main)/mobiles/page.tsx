@@ -1,8 +1,15 @@
-import { allMobileBrandsName, demoMobiles } from "@/utils/mobile-demo-data";
+// "use client";
+
+import { apiFetch } from "@/lib/api-client";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function AllMobilesPage() {
+export default async function AllMobilesPage() {
+  const res = await apiFetch(`/api/mobile/all-mobiles`, {
+    method: "GET",
+  });
+  console.log("res:", res);
+
   return (
     <section className="container mx-auto">
       {/* Category Header */}
@@ -87,15 +94,19 @@ export default function AllMobilesPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {demoMobiles?.map((mobile) => (
+            {(res as any)?.data?.map((mobile: any) => (
               <div
-                key={mobile.id}
+                key={mobile?.id}
                 className="bg-slate-50 rounded-lg overflow-hidden border flex flex-col justify-between"
               >
                 <div className="">
                   <Image
-                    src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt={mobile.name}
+                    src={
+                      mobile?.images
+                        ? mobile?.images[0]?.url
+                        : "https://images.unsplash.com/photo-1603539947678-cd3954ed515d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    }
+                    alt={mobile?.name}
                     width={1280}
                     height={720}
                     className="object-cover h-48 w-full rounded-md"
@@ -103,22 +114,33 @@ export default function AllMobilesPage() {
 
                   <div className="mt-4 px-6 pb-6">
                     <h2 className="text-lg font-semibold text-slate-800 mb-2">
-                      {mobile.name}
+                      {mobile?.name}
                     </h2>
                     <p className="text-sm text-slate-600 mb-1">
-                      <strong>Display:</strong> {mobile.specs.display}
+                      <strong>Brand:</strong> {mobile?.brand}
                     </p>
                     <p className="text-sm text-slate-600 mb-1">
-                      <strong>Storage:</strong> {mobile.specs.storage}
+                      <strong>Launch Date:</strong>{" "}
+                      {mobile?.launch.release_date}
+                    </p>
+                    <p className="text-sm text-slate-600 mb-1">
+                      <strong>Display Size:</strong> {mobile?.display.size}
+                    </p>
+                    <p className="text-sm text-slate-600 mb-1">
+                      <strong>Internal Storage:</strong>{" "}
+                      {mobile?.memory.internal.join(", ")}
                     </p>
                     <p className="text-sm text-slate-600">
-                      <strong>Camera:</strong> {mobile.specs.camera}
+                      <strong>Main Camera:</strong>{" "}
+                      {mobile?.camera.main.modules.join(", ")}
                     </p>
                   </div>
                 </div>
 
                 <div className="px-6 pb-6">
-                  <Link href="/mobiles/mobiles-categories/apple/iphone-14">
+                  <Link
+                    href={`/mobiles/mobiles-categories/${mobile.brand}/${mobile.slug}`}
+                  >
                     <span className="font-bold text-blue-600 hover:underline">
                       View More
                     </span>
