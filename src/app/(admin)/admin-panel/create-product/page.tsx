@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { mobileBrands } from "@/utils/mobile-demo-data";
+import { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -8,17 +10,49 @@ export default function CreateProduct() {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
   const [images, setImages] = useState<any>([]);
-  const [launchInfo, setLaunchInfo] = useState<any>({});
+  const [launchInfo, setLaunchInfo] = useState<any>({
+    announced: "",
+    status: "",
+    release_date: "",
+  });
+  console.log("launchInfo:", launchInfo);
   const [bodyInfo, setBodyInfo] = useState<any>({});
   const [displayInfo, setDisplayInfo] = useState<any>({});
   const [platformInfo, setPlatformInfo] = useState<any>({});
-  const [memoryInfo, setMemoryInfo] = useState<any>({});
-  const [cameraInfo, setCameraInfo] = useState<any>({});
+  const [memoryInfo, setMemoryInfo] = useState<any>({
+    internal: ["", "", "", ""],
+    card_slot: "",
+  });
+  console.log("memoryInfo:", memoryInfo);
+  const [cameraInfo, setCameraInfo] = useState<any>({
+    main: { modules: [""] },
+    selfie: { modules: [""] },
+  });
+  console.log("cameraInfo:", cameraInfo);
   const [soundInfo, setSoundInfo] = useState<any>({});
   const [communicationsInfo, setCommunicationsInfo] = useState<any>({});
   const [featuresInfo, setFeaturesInfo] = useState<any>({});
   const [batteryInfo, setBatteryInfo] = useState<any>({});
-  const [misc, setMisc] = useState<any>({});
+  const [misc, setMisc] = useState<any>({
+    colors: ["", "", ""],
+    models: ["", "", ""],
+  });
+  console.log("misc:", misc);
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<any>({
+    defaultValues: {
+      images: ["", "", ""],
+    },
+  });
+
+  const validateURL = (url: string) =>
+    /^(http:\/\/|https:\/\/)/.test(url) ||
+    "Please enter a valid URL starting with http:// or https://";
 
   const handleNameChange = (e: any) => {
     setName(e.target.value);
@@ -114,24 +148,6 @@ export default function CreateProduct() {
     });
   };
 
-  const handleSoundInfoChange = (e: any, key: any) => {
-    setSoundInfo((prevSoundInfo: any) => ({
-      ...prevSoundInfo,
-      [key]: e.target.value,
-    }));
-  };
-
-  const handleMemoryArrayChange = (e: any, key: any, index: any) => {
-    setMemoryInfo((prevMemoryInfo: any) => {
-      const updatedArray = [...(prevMemoryInfo[key] || [])];
-      updatedArray[index] = e.target.value;
-      return {
-        ...prevMemoryInfo,
-        [key]: updatedArray,
-      };
-    });
-  };
-
   const handleCameraArrayChange = (
     e: any,
     key: any,
@@ -151,6 +167,24 @@ export default function CreateProduct() {
           ...keyExists,
           [subKey]: updatedArray,
         },
+      };
+    });
+  };
+
+  const handleSoundInfoChange = (e: any, key: any) => {
+    setSoundInfo((prevSoundInfo: any) => ({
+      ...prevSoundInfo,
+      [key]: e.target.value,
+    }));
+  };
+
+  const handleMemoryArrayChange = (e: any, key: any, index: any) => {
+    setMemoryInfo((prevMemoryInfo: any) => {
+      const updatedArray = [...(prevMemoryInfo[key] || [])];
+      updatedArray[index] = e.target.value;
+      return {
+        ...prevMemoryInfo,
+        [key]: updatedArray,
       };
     });
   };
@@ -187,9 +221,7 @@ export default function CreateProduct() {
     });
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
+  const handleFormSubmit = async (data: any) => {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/mobile`,
@@ -201,7 +233,7 @@ export default function CreateProduct() {
           body: JSON.stringify({
             name: name,
             brand: brand,
-            images: images,
+            images: data.images,
             launch: launchInfo,
             body: bodyInfo,
             display: displayInfo,
@@ -210,7 +242,7 @@ export default function CreateProduct() {
             camera: cameraInfo,
             sound: soundInfo,
             comms: communicationsInfo,
-            featurs: featuresInfo,
+            features: featuresInfo,
             battery: batteryInfo,
             misc: misc,
           }),
@@ -219,6 +251,8 @@ export default function CreateProduct() {
       if (res.ok) {
         toast.success("Mobile created successfully!");
         resetForm();
+        reset();
+        // location.reload();
       } else {
         toast.error("Failed to create mobile");
         console.error("res:", res);
@@ -233,22 +267,33 @@ export default function CreateProduct() {
     setName("");
     setBrand("");
     setImages([]);
-    setLaunchInfo({});
+    setLaunchInfo({ announced: "", status: "", release_date: "" });
     setBodyInfo({});
     setDisplayInfo({});
     setPlatformInfo({});
-    setMemoryInfo({});
-    setCameraInfo({});
+    setMemoryInfo({
+      internal: ["", "", "", ""],
+      card_slot: "",
+    });
+
+    setCameraInfo({
+      main: { modules: [""] },
+      selfie: { modules: [""] },
+    });
     setSoundInfo({});
     setCommunicationsInfo({});
     setFeaturesInfo({});
     setBatteryInfo({});
-    setMisc({});
+    setMisc({
+      colors: ["", "", ""],
+      models: ["", "", ""],
+    });
   };
+
   return (
     <section className="max-w-4xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-6">Create New Mobile</h1>
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-8">
         {/* Device Name */}
         <div>
           <label className="block text-sm font-medium text-gray-700">
@@ -258,7 +303,7 @@ export default function CreateProduct() {
             type="text"
             value={name}
             onChange={handleNameChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
 
@@ -267,12 +312,18 @@ export default function CreateProduct() {
           <label className="block text-sm font-medium text-gray-700">
             Device Brand
           </label>
-          <input
-            type="text"
-            value={name}
+          <select
+            value={brand}
             onChange={handleBrandChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          >
+            <option value="">Select a brand</option>
+            {mobileBrands?.map((brand: any, index: any) => (
+              <option key={index} value={brand.toLowerCase()}>
+                {brand}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Images */}
@@ -280,24 +331,72 @@ export default function CreateProduct() {
           <label className="block text-sm font-medium text-gray-700">
             Device Images
           </label>
-          <input
-            type="text"
-            value={images.length > 0 ? images[0] : ""}
-            onChange={(e) => handleImageChange(0, e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+
+          {/* Image 1 */}
+          <Controller
+            name="images[0]"
+            control={control}
+            rules={{
+              validate: validateURL,
+            }}
+            render={({ field }) => (
+              <input
+                type="text"
+                {...field}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                // placeholder="Image URL 1"
+              />
+            )}
           />
-          <input
-            type="text"
-            value={images.length > 1 ? images[1] : ""}
-            onChange={(e) => handleImageChange(1, e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          {(errors as any).images?.[0] && (
+            <p className="text-red-500 text-sm mt-1">
+              {(errors as any).images[0]?.message}
+            </p>
+          )}
+
+          {/* Image 2 */}
+          <Controller
+            name="images[1]"
+            control={control}
+            rules={{
+              validate: validateURL,
+            }}
+            render={({ field }) => (
+              <input
+                type="text"
+                {...field}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                // placeholder="Image URL 2"
+              />
+            )}
           />
-          <input
-            type="text"
-            value={images.length > 2 ? images[2] : ""}
-            onChange={(e) => handleImageChange(2, e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          {(errors as any).images?.[1] && (
+            <p className="text-red-500 text-sm mt-1">
+              {(errors as any).images[1]?.message}
+            </p>
+          )}
+
+          {/* Image 3 */}
+          <Controller
+            name="images[2]"
+            control={control}
+            rules={{
+              validate: validateURL,
+            }}
+            render={({ field }) => (
+              <input
+                type="text"
+                {...field}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                // placeholder="Image URL 3"
+              />
+            )}
           />
+          {(errors as any).images?.[2] && (
+            <p className="text-red-500 text-sm mt-1">
+              {(errors as any).images[2]?.message}
+            </p>
+          )}
         </div>
 
         {/* Launch Information */}
@@ -312,7 +411,7 @@ export default function CreateProduct() {
                 type="date"
                 value={launchInfo?.announced}
                 onChange={(e) => handleLaunchInfoChange(e, "announced")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -323,7 +422,7 @@ export default function CreateProduct() {
                 type="text"
                 value={launchInfo?.status}
                 onChange={(e) => handleLaunchInfoChange(e, "status")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -334,7 +433,7 @@ export default function CreateProduct() {
                 type="date"
                 value={launchInfo?.release_date}
                 onChange={(e) => handleLaunchInfoChange(e, "release_date")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>
@@ -352,7 +451,7 @@ export default function CreateProduct() {
                 type="text"
                 value={bodyInfo.dimensions || ""}
                 onChange={(e) => handleBodyInfoChange(e, "dimensions", "")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -363,7 +462,7 @@ export default function CreateProduct() {
                 type="text"
                 value={bodyInfo.weight || ""}
                 onChange={(e) => handleBodyInfoChange(e, "weight", "")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -374,19 +473,19 @@ export default function CreateProduct() {
                 type="text"
                 value={bodyInfo.build?.front || ""}
                 onChange={(e) => handleBodyInfoChange(e, "build", "front")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
               <input
                 type="text"
                 value={bodyInfo.build?.back || ""}
                 onChange={(e) => handleBodyInfoChange(e, "build", "back")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
               <input
                 type="text"
                 value={bodyInfo.build?.frame || ""}
                 onChange={(e) => handleBodyInfoChange(e, "build", "frame")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -397,10 +496,10 @@ export default function CreateProduct() {
                 type="text"
                 value={bodyInfo.sim?.type || ""}
                 onChange={(e) => handleBodyInfoChange(e, "sim", "type")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
-              <label className="block text-sm font-medium text-gray-700 mt-4">
-                Additional SIM Features
+              {/* <label className="block text-sm font-medium text-gray-700 mt-4">
+                Others
               </label>
               <input
                 type="text"
@@ -408,8 +507,8 @@ export default function CreateProduct() {
                 onChange={(e) =>
                   handleBodyInfoChange(e, "sim", "additional_features")
                 }
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              /> */}
             </div>
           </div>
         </div>
@@ -426,7 +525,7 @@ export default function CreateProduct() {
                 type="text"
                 value={displayInfo.type || ""}
                 onChange={(e) => handleDisplayInfoChange(e, "type")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -437,7 +536,7 @@ export default function CreateProduct() {
                 type="text"
                 value={displayInfo.size || ""}
                 onChange={(e) => handleDisplayInfoChange(e, "size")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -448,7 +547,7 @@ export default function CreateProduct() {
                 type="text"
                 value={displayInfo.resolution || ""}
                 onChange={(e) => handleDisplayInfoChange(e, "resolution")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -459,7 +558,7 @@ export default function CreateProduct() {
                 type="text"
                 value={displayInfo.protection || ""}
                 onChange={(e) => handleDisplayInfoChange(e, "protection")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>
@@ -477,7 +576,7 @@ export default function CreateProduct() {
                 type="text"
                 value={platformInfo.os || ""}
                 onChange={(e) => handlePlatformInfoChange(e, "os")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -488,7 +587,7 @@ export default function CreateProduct() {
                 type="text"
                 value={platformInfo.chipset || ""}
                 onChange={(e) => handlePlatformInfoChange(e, "chipset")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -499,7 +598,7 @@ export default function CreateProduct() {
                 type="text"
                 value={platformInfo.cpu || ""}
                 onChange={(e) => handlePlatformInfoChange(e, "cpu")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -510,7 +609,7 @@ export default function CreateProduct() {
                 type="text"
                 value={platformInfo.gpu || ""}
                 onChange={(e) => handlePlatformInfoChange(e, "gpu")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>
@@ -526,27 +625,27 @@ export default function CreateProduct() {
               </label>
               <input
                 type="text"
-                // value={option}
+                value={memoryInfo.internal[0]}
                 onChange={(e) => handleMemoryArrayChange(e, "internal", 0)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
               <input
                 type="text"
-                // value={option}
+                value={memoryInfo.internal[1]}
                 onChange={(e) => handleMemoryArrayChange(e, "internal", 1)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
               <input
                 type="text"
-                // value={option}
+                value={memoryInfo.internal[2]}
                 onChange={(e) => handleMemoryArrayChange(e, "internal", 2)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
               <input
                 type="text"
-                // value={option}
+                value={memoryInfo.internal[3]}
                 onChange={(e) => handleMemoryArrayChange(e, "internal", 3)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -557,7 +656,7 @@ export default function CreateProduct() {
                 type="text"
                 value={memoryInfo.card_slot || ""}
                 onChange={(e) => handleMemoryInfoChange(e, "card_slot", "")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>
@@ -571,26 +670,28 @@ export default function CreateProduct() {
               <label className="block text-sm font-medium text-gray-700">
                 Main Camera
               </label>
-              <input
-                type="text"
-                // value={feature}
+              <textarea
+                // type="text"
+                value={cameraInfo.main.modules[0] || ""}
+                rows={4}
                 onChange={(e) =>
                   handleCameraArrayChange(e, "main", "modules", 0)
                 }
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Selfie Camera
               </label>
-              <input
-                type="text"
-                // value={feature}
+              <textarea
+                // type="text"
+                value={cameraInfo.selfie.modules[0] || ""}
+                rows={4}
                 onChange={(e) =>
                   handleCameraArrayChange(e, "selfie", "modules", 0)
                 }
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>
@@ -608,7 +709,7 @@ export default function CreateProduct() {
                 type="text"
                 value={soundInfo.loudspeaker || ""}
                 onChange={(e) => handleSoundInfoChange(e, "loudspeaker")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -619,7 +720,7 @@ export default function CreateProduct() {
                 type="text"
                 value={soundInfo.jack || ""}
                 onChange={(e) => handleSoundInfoChange(e, "jack")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>
@@ -637,7 +738,7 @@ export default function CreateProduct() {
                 type="text"
                 value={communicationsInfo.wlan || ""}
                 onChange={(e) => handleCommunicationsInfoChange(e, "wlan")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -648,7 +749,7 @@ export default function CreateProduct() {
                 type="text"
                 value={communicationsInfo.bluetooth || ""}
                 onChange={(e) => handleCommunicationsInfoChange(e, "bluetooth")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -659,7 +760,7 @@ export default function CreateProduct() {
                 type="text"
                 value={communicationsInfo.gps || ""}
                 onChange={(e) => handleCommunicationsInfoChange(e, "gps")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -668,9 +769,9 @@ export default function CreateProduct() {
               </label>
               <input
                 type="text"
-                value={featuresInfo.nfc || ""}
-                onChange={(e) => handleFeaturesInfoChange(e, "nfc")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                value={communicationsInfo.nfc || ""}
+                onChange={(e) => handleCommunicationsInfoChange(e, "nfc")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -679,9 +780,9 @@ export default function CreateProduct() {
               </label>
               <input
                 type="text"
-                value={featuresInfo.radio || ""}
-                onChange={(e) => handleFeaturesInfoChange(e, "radio")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                value={communicationsInfo.radio || ""}
+                onChange={(e) => handleCommunicationsInfoChange(e, "radio")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -690,9 +791,9 @@ export default function CreateProduct() {
               </label>
               <input
                 type="text"
-                value={featuresInfo.usb || ""}
-                onChange={(e) => handleFeaturesInfoChange(e, "usb")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                value={communicationsInfo.usb || ""}
+                onChange={(e) => handleCommunicationsInfoChange(e, "usb")}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>
@@ -706,11 +807,12 @@ export default function CreateProduct() {
               <label className="block text-sm font-medium text-gray-700">
                 Sensors
               </label>
-              <input
-                type="text"
+              <textarea
+                // type="text"
+                rows={2}
                 value={featuresInfo.sensors || ""}
                 onChange={(e) => handleFeaturesInfoChange(e, "sensors")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>
@@ -728,7 +830,7 @@ export default function CreateProduct() {
                 type="text"
                 value={batteryInfo.type || ""}
                 onChange={(e) => handleBatteryInfoChange(e, "type")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -739,7 +841,7 @@ export default function CreateProduct() {
                 type="text"
                 value={batteryInfo.charging || ""}
                 onChange={(e) => handleBatteryInfoChange(e, "charging")}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>
@@ -755,21 +857,21 @@ export default function CreateProduct() {
               </label>
               <input
                 type="text"
-                // value={color || ""}
+                value={misc.colors[0] || ""}
                 onChange={(e) => handleMiscArrayChange(e, "colors", 0)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
               <input
                 type="text"
-                // value={color || ""}
+                value={misc.colors[1] || ""}
                 onChange={(e) => handleMiscArrayChange(e, "colors", 1)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
               <input
                 type="text"
-                // value={color || ""}
+                value={misc.colors[2] || ""}
                 onChange={(e) => handleMiscArrayChange(e, "colors", 2)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
             <div>
@@ -778,21 +880,21 @@ export default function CreateProduct() {
               </label>
               <input
                 type="text"
-                // value={model || ""}
+                value={misc.models[0] || ""}
                 onChange={(e) => handleMiscArrayChange(e, "models", 0)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
               <input
                 type="text"
-                // value={model || ""}
+                value={misc.models[1] || ""}
                 onChange={(e) => handleMiscArrayChange(e, "models", 1)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
               <input
                 type="text"
-                // value={model || ""}
+                value={misc.models[2] || ""}
                 onChange={(e) => handleMiscArrayChange(e, "models", 2)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>
@@ -802,7 +904,7 @@ export default function CreateProduct() {
         <div>
           <button
             type="submit"
-            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Create Mobile
           </button>

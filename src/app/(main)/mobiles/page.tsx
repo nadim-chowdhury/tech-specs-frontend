@@ -1,14 +1,67 @@
-// "use client";
+"use client";
 
-import { apiFetch } from "@/lib/api-client";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function AllMobilesPage() {
-  const res = await apiFetch(`/api/mobile/all-mobiles`, {
-    method: "GET",
+export default function AllMobilesPage() {
+  const [mobiles, setMobiles] = useState([]);
+  console.log("mobiles:", mobiles);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [limit] = useState(12);
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("createdAt");
+  const [sortDirection, setSortDirection] = useState<"ASC" | "DESC">("DESC");
+  const [filter, setFilter] = useState<any>({
+    brand: "",
+    priceRange: [],
+    ram: "",
+    storage: "",
   });
-  console.log("res:", res);
+
+  async function fetchMobiles() {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/mobile/all-mobiles?page=${page}&limit=${limit}&sort=${sort}&sortDirection=${sortDirection}`
+      );
+
+      if (!res.ok) {
+        throw new Error(`Error: ${res.statusText}`);
+      }
+
+      const data = await res.json();
+
+      console.log("data:", data);
+
+      if (data && data.data && data.total) {
+        setMobiles(data.data);
+        setTotal(data.total);
+      } else {
+        console.error("Unexpected data format:", data);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchMobiles();
+  }, [page, search, sort, sortDirection]);
+
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSort(value);
+    setSortDirection(value === "price" ? "ASC" : "DESC");
+  };
+
+  const handleFilterChange = (field: string, value: any) => {
+    // setFilters({ ...filters, [field]: value });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
   return (
     <section className="container mx-auto">
@@ -27,74 +80,58 @@ export default async function AllMobilesPage() {
 
           <div className="mb-4">
             <label className="block mb-2 font-semibold">Price Range</label>
-            <select className="p-2 w-full rounded">
-              <option value="">All</option>
+            <select
+              className="p-2 w-full rounded"
+              onChange={(e) =>
+                handleFilterChange("priceRange", e.target.value.split(","))
+              }
+            >
+              <option value="0,1000">All</option>
               <option value="0,299">$0 - $299</option>
               <option value="300,599">$300 - $599</option>
-              {/* Add more price ranges */}
             </select>
           </div>
 
           <div className="mb-4">
             <label className="block mb-2 font-semibold">RAM</label>
-            <select className="p-2 w-full rounded">
+            <select
+              className="p-2 w-full rounded"
+              onChange={(e) => handleFilterChange("ram", e.target.value)}
+            >
               <option value="">All</option>
               <option value="4GB">4GB</option>
               <option value="6GB">6GB</option>
-              {/* Add more RAM options */}
             </select>
           </div>
 
           <div className="mb-4">
             <label className="block mb-2 font-semibold">Storage</label>
-            <select className="p-2 w-full rounded">
+            <select
+              className="p-2 w-full rounded"
+              onChange={(e) => handleFilterChange("storage", e.target.value)}
+            >
               <option value="">All</option>
               <option value="64GB">64GB</option>
               <option value="128GB">128GB</option>
-              {/* Add more storage options */}
             </select>
           </div>
-
-          {/* <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold">By Brands</h2>
-            <Link href="/mobiles/mobiles-categories">
-              <span className="text-slate-600">Show All</span>
-            </Link>
-          </div> */}
-
-          {/* <div className="flex flex-wrap items-center justify-center gap-2">
-            {allMobileBrandsName?.map((item) => (
-              <Link
-                key={item.id}
-                href={`/mobiles/mobiles-categories/${item.name.toLowerCase()}`}
-              >
-                <div className="flex items-center gap-2 p-2 bg-white border rounded-md hover:shadow-sm transition-shadow">
-                  <Image
-                    src="https://images.unsplash.com/photo-1678059285248-031d5128c38a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt=""
-                    width={480}
-                    height={480}
-                    className="w-5 h-5 rounded-md object-cover"
-                  />
-                  <h3 className="text-slate-800 text-sm">{item?.name}</h3>
-                </div>
-              </Link>
-            ))}
-          </div> */}
         </aside>
 
         {/* Product Grid */}
         <div className="col-span-1 md:col-span-3">
           <div className="flex justify-end mb-4">
-            <select className="p-2 rounded">
-              <option value="relevance">Sort by Relevance</option>
+            <select
+              className="p-2 rounded"
+              onChange={handleSortChange}
+              value={sort}
+            >
+              <option value="createdAt">Sort by Relevance</option>
               <option value="price">Sort by Price</option>
-              {/* Add more sorting options */}
             </select>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {(res as any)?.data?.map((mobile: any) => (
+            {mobiles?.map((mobile: any) => (
               <div
                 key={mobile?.id}
                 className="bg-slate-50 rounded-lg overflow-hidden border flex flex-col justify-between"
@@ -104,7 +141,7 @@ export default async function AllMobilesPage() {
                     src={
                       mobile?.images
                         ? mobile?.images[0]?.url
-                        : "https://images.unsplash.com/photo-1603539947678-cd3954ed515d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        : "https://via.placeholder.com/150"
                     }
                     alt={mobile?.name}
                     width={1280}
@@ -126,20 +163,14 @@ export default async function AllMobilesPage() {
                     <p className="text-sm text-slate-600 mb-1">
                       <strong>Display Size:</strong> {mobile?.display.size}
                     </p>
-                    <p className="text-sm text-slate-600 mb-1">
-                      <strong>Internal Storage:</strong>{" "}
-                      {mobile?.memory.internal.join(", ")}
-                    </p>
-                    <p className="text-sm text-slate-600">
-                      <strong>Main Camera:</strong>{" "}
-                      {mobile?.camera.main.modules.join(", ")}
-                    </p>
                   </div>
                 </div>
 
                 <div className="px-6 pb-6">
                   <Link
-                    href={`/mobiles/mobiles-categories/${mobile.brand}/${mobile.slug}`}
+                    href={`/mobiles/mobiles-categories/${mobile?.brand.toLowerCase()}/${
+                      mobile?.slug
+                    }`}
                   >
                     <span className="font-bold text-blue-600 hover:underline">
                       View More
@@ -152,18 +183,17 @@ export default async function AllMobilesPage() {
 
           {/* Pagination */}
           <div className="flex justify-center mt-8">
-            <button className="px-4 py-2 mx-1 bg-slate-200 rounded hover:bg-slate-300 transition-colors">
-              Previous
-            </button>
-            <button className="px-4 py-2 mx-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
-              1
-            </button>
-            <button className="px-4 py-2 mx-1 bg-slate-200 rounded hover:bg-slate-300 transition-colors">
-              2
-            </button>
-            <button className="px-4 py-2 mx-1 bg-slate-200 rounded hover:bg-slate-300 transition-colors">
-              Next
-            </button>
+            {Array.from({ length: Math.ceil(total / limit) }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => handlePageChange(i + 1)}
+                className={`px-4 py-2 mx-1 ${
+                  page === i + 1 ? "bg-blue-600 text-white" : "bg-slate-200"
+                } rounded hover:bg-slate-300 transition-colors`}
+              >
+                {i + 1}
+              </button>
+            ))}
           </div>
         </div>
       </div>

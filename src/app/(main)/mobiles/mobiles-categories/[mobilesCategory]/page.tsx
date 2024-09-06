@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Filter } from "@/interfaces/mobiles";
-import { mobileProducts } from "@/utils/mobile-demo-data";
 
 export default function BrandAllMobilesPage() {
   const [filter, setFilter] = useState<Filter>({
@@ -13,22 +12,29 @@ export default function BrandAllMobilesPage() {
     ram: "",
     storage: "",
   });
+  const [mobiles, setMobiles] = useState([]);
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("relevance");
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
+  useEffect(() => {
+    fetchMobiles();
+  }, [filter, search, sort, page]);
+
+  const fetchMobiles = async () => {
+    const priceRangeQuery = filter.priceRange.join(",");
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/mobiles?search=${search}&page=${page}&limit=${limit}&sort=${sort}&priceRange=${priceRangeQuery}&ram=${filter.ram}&storage=${filter.storage}`
+    );
+    const data = await res.json();
+    setMobiles(data.mobiles);
+  };
 
   const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value.split(",").map(Number);
     setFilter({ ...filter, priceRange: value });
   };
-
-  const filteredProducts = mobileProducts.filter((product) => {
-    return (
-      (filter.brand === "" || product.brand === filter.brand) &&
-      (filter.priceRange.length === 0 ||
-        (product.price >= filter.priceRange[0] &&
-          product.price <= filter.priceRange[1])) &&
-      (filter.ram === "" || product.ram === filter.ram) &&
-      (filter.storage === "" || product.storage === filter.storage)
-    );
-  });
 
   return (
     <section className="container mx-auto">
@@ -58,7 +64,6 @@ export default function BrandAllMobilesPage() {
               <option value="">All</option>
               <option value={[0, 299].join(",")}>$0 - $299</option>
               <option value={[300, 599].join(",")}>$300 - $599</option>
-              {/* Add more price ranges as needed */}
             </select>
           </div>
 
@@ -72,7 +77,6 @@ export default function BrandAllMobilesPage() {
               <option value="">All</option>
               <option value="4GB">4GB</option>
               <option value="6GB">6GB</option>
-              {/* Add more RAM options as needed */}
             </select>
           </div>
 
@@ -88,7 +92,6 @@ export default function BrandAllMobilesPage() {
               <option value="">All</option>
               <option value="64GB">64GB</option>
               <option value="128GB">128GB</option>
-              {/* Add more storage options as needed */}
             </select>
           </div>
         </aside>
@@ -96,22 +99,25 @@ export default function BrandAllMobilesPage() {
         {/* Product Grid */}
         <div className="md:col-span-3">
           <div className="flex justify-end mb-4">
-            <select className="p-2 rounded">
+            <select
+              className="p-2 rounded"
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+            >
               <option value="relevance">Sort by Relevance</option>
               <option value="price">Sort by Price</option>
-              {/* Add more sorting options as needed */}
             </select>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProducts.map((product) => (
+            {mobiles?.map((product: any) => (
               <div
-                key={product.id}
+                key={product?.id}
                 className="bg-slate-50 rounded-lg overflow-hidden border flex flex-col"
               >
                 <Image
-                  src={product.image}
-                  alt={product.name}
+                  src={product?.image}
+                  alt={product?.name}
                   className="w-full h-48 object-cover mb-2 rounded-t-md"
                   width={150}
                   height={150}
@@ -119,18 +125,18 @@ export default function BrandAllMobilesPage() {
 
                 <div className="mt-4 px-6">
                   <h3 className="text-lg font-semibold text-slate-800 mb-2">
-                    {product.name}
+                    {product?.name}
                   </h3>
-                  <p className="text-sm text-slate-600">RAM: {product.ram}</p>
+                  <p className="text-sm text-slate-600">RAM: {product?.ram}</p>
                   <p className="text-sm text-slate-600">
-                    Storage: {product.storage}
+                    Storage: {product?.storage}
                   </p>
                 </div>
 
                 <div className="px-6 py-4 mt-auto">
                   <Link
-                    href={`/mobiles/mobiles-categories/${product.brand.toLowerCase()}/${
-                      product.id
+                    href={`/mobiles/mobiles-categories/${product?.brand.toLowerCase()}/${
+                      product?.id
                     }`}
                     className="font-bold text-slate-600 hover:underline"
                   >
@@ -143,14 +149,20 @@ export default function BrandAllMobilesPage() {
 
           {/* Pagination */}
           <div className="flex justify-center mt-8">
-            <button className="px-4 py-2 mx-1 bg-slate-200 rounded">
+            <button
+              className="px-4 py-2 mx-1 bg-slate-200 rounded"
+              onClick={() => setPage(page - 1)}
+              disabled={page === 1}
+            >
               Previous
             </button>
             <button className="px-4 py-2 mx-1 bg-blue-600 text-white rounded">
-              1
+              {page}
             </button>
-            <button className="px-4 py-2 mx-1 bg-slate-200 rounded">2</button>
-            <button className="px-4 py-2 mx-1 bg-slate-200 rounded">
+            <button
+              className="px-4 py-2 mx-1 bg-slate-200 rounded"
+              onClick={() => setPage(page + 1)}
+            >
               Next
             </button>
           </div>

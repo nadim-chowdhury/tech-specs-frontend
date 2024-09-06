@@ -12,16 +12,20 @@ export default function MobileDeviceDetails({ device }: any) {
   return (
     <div className="w-full">
       {/* Device Name */}
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">{device?.name}</h1>
+      <h1 className="text-2xl font-bold text-gray-800">{device?.name}</h1>
+      <h3 className="text-xl font-bold text-gray-800 mb-6 capitalize">
+        {device?.brand}
+      </h3>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {device?.images?.map((img: any, i: any) => (
           <div
             key={i}
-            className={`h-[40vh] w-full ${i > 0 ? "hidden lg:block" : ""}`}
+            className={`h-[40vh] w-full ${i > 0 ? "hidden sm:block" : ""}`}
           >
             <Image
-              src={img}
+              src={img?.url || ""}
+              // src="https://images.unsplash.com/photo-1599950755346-a3e58f84ca63?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt=""
               width={1280}
               height={720}
@@ -107,12 +111,12 @@ export default function MobileDeviceDetails({ device }: any) {
               {device?.body?.sim?.type}
             </TableCell>
           </TableRow>
-          <TableRow>
+          {/* <TableRow>
             <TableCell className="font-medium text-gray-700">Others:</TableCell>
             <TableCell className="text-gray-700">
               {device?.body?.sim?.additional_features}
             </TableCell>
-          </TableRow>
+          </TableRow> */}
         </TableBody>
 
         {/* Display Information */}
@@ -155,12 +159,6 @@ export default function MobileDeviceDetails({ device }: any) {
               {device?.display?.protection}
             </TableCell>
           </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">Others:</TableCell>
-            <TableCell className="text-gray-700">
-              {device?.display?.additional_features}
-            </TableCell>
-          </TableRow>
         </TableBody>
 
         {/* Platform Information */}
@@ -182,22 +180,6 @@ export default function MobileDeviceDetails({ device }: any) {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Updates:
-            </TableCell>
-            <TableCell className="text-gray-700">
-              {device?.platform?.updates}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Chipset:
-            </TableCell>
-            <TableCell className="text-gray-700">
-              {device?.platform?.chipset}
-            </TableCell>
-          </TableRow>
-          <TableRow>
             <TableCell className="font-medium text-gray-700">CPU:</TableCell>
             <TableCell className="text-gray-700">
               {device?.platform?.cpu}
@@ -207,6 +189,14 @@ export default function MobileDeviceDetails({ device }: any) {
             <TableCell className="font-medium text-gray-700">GPU:</TableCell>
             <TableCell className="text-gray-700">
               {device?.platform?.gpu}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium text-gray-700">
+              Chipset:
+            </TableCell>
+            <TableCell className="text-gray-700">
+              {device?.platform?.chipset}
             </TableCell>
           </TableRow>
         </TableBody>
@@ -239,12 +229,6 @@ export default function MobileDeviceDetails({ device }: any) {
               {device?.memory?.internal?.join(", ")}
             </TableCell>
           </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">Type:</TableCell>
-            <TableCell className="text-gray-700">
-              {device?.memory?.type}
-            </TableCell>
-          </TableRow>
         </TableBody>
 
         {/* Camera Information */}
@@ -260,78 +244,19 @@ export default function MobileDeviceDetails({ device }: any) {
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell
-              colSpan={3}
-              className="font-medium text-lg text-gray-700"
-            >
-              Main Camera
+            <TableCell className="font-medium text-gray-700">
+              Main Camera:
             </TableCell>
-          </TableRow>
-          {device?.camera?.main_camera?.modules?.map(
-            (module: any, index: any) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium text-gray-700">
-                  Module {index + 1}:
-                </TableCell>
-                <TableCell className="text-gray-700">
-                  <p>Megapixels: {module?.megapixels}</p>
-                  <p>Aperture: {module?.aperture}</p>
-                  <p>Lens: {module?.lens}</p>
-                  <p>Sensor Size: {module?.sensor_size}</p>
-                  <p>Pixel Size: {module?.pixel_size}</p>
-                  <p>Features: {module?.features?.join(", ")}</p>
-                </TableCell>
-              </TableRow>
-            )
-          )}
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">Video:</TableCell>
             <TableCell className="text-gray-700">
-              {device?.camera?.main_camera?.video?.join(", ")}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell
-              colSpan={3}
-              className="font-medium text-lg text-gray-700"
-            >
-              Selfie Camera
+              {device?.camera?.main?.modules?.join(", ")}
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell className="font-medium text-gray-700">
-              Megapixels:
+              Selfie Camera:
             </TableCell>
             <TableCell className="text-gray-700">
-              {device?.camera?.selfie_camera?.megapixels}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Aperture:
-            </TableCell>
-            <TableCell className="text-gray-700">
-              {device?.camera?.selfie_camera?.aperture}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">Lens:</TableCell>
-            <TableCell className="text-gray-700">
-              {device?.camera?.selfie_camera?.lens}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Features:
-            </TableCell>
-            <TableCell className="text-gray-700">
-              {device?.camera?.selfie_camera?.features?.join(", ")}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">Video:</TableCell>
-            <TableCell className="text-gray-700">
-              {device?.camera?.selfie_camera?.video?.join(", ")}
+              {device?.camera?.selfie?.modules?.join(", ")}
             </TableCell>
           </TableRow>
         </TableBody>
@@ -361,25 +286,31 @@ export default function MobileDeviceDetails({ device }: any) {
               Audio Jack:
             </TableCell>
             <TableCell className="text-gray-700">
-              {device?.sound?.audio_jack}
+              {device?.sound?.jack}
             </TableCell>
           </TableRow>
         </TableBody>
 
-        {/* Communications Information */}
+        {/* Features Information */}
         <TableHeader>
           <TableRow>
             <TableHead
-              colSpan={3}
+              colSpan={2}
               className="text-xl font-semibold text-gray-700"
             >
-              Communications
+              Comms
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell className="font-medium text-gray-700">WLAN:</TableCell>
+            <TableCell className="font-medium text-gray-700">GPS:</TableCell>
+            <TableCell className="text-gray-700">
+              {device?.comms?.gps}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium text-gray-700">Wifi:</TableCell>
             <TableCell className="text-gray-700">
               {device?.comms?.wlan}
             </TableCell>
@@ -393,27 +324,21 @@ export default function MobileDeviceDetails({ device }: any) {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className="font-medium text-gray-700">GPS:</TableCell>
-            <TableCell className="text-gray-700">
-              {device?.comms?.gps}
-            </TableCell>
-          </TableRow>
-          <TableRow>
             <TableCell className="font-medium text-gray-700">NFC:</TableCell>
             <TableCell className="text-gray-700">
               {device?.comms?.nfc}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className="font-medium text-gray-700">Radio:</TableCell>
-            <TableCell className="text-gray-700">
-              {device?.comms?.radio}
-            </TableCell>
-          </TableRow>
-          <TableRow>
             <TableCell className="font-medium text-gray-700">USB:</TableCell>
             <TableCell className="text-gray-700">
               {device?.comms?.usb}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium text-gray-700">Radio:</TableCell>
+            <TableCell className="text-gray-700">
+              {device?.comms?.radio}
             </TableCell>
           </TableRow>
         </TableBody>
@@ -435,13 +360,7 @@ export default function MobileDeviceDetails({ device }: any) {
               Sensors:
             </TableCell>
             <TableCell className="text-gray-700">
-              {/* {device?.features?.sensors?.join(", ")} */}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">Others:</TableCell>
-            <TableCell className="text-gray-700">
-              {device?.features?.additional_features?.join(", ")}
+              {device?.features?.sensors}
             </TableCell>
           </TableRow>
         </TableBody>
@@ -466,35 +385,19 @@ export default function MobileDeviceDetails({ device }: any) {
           </TableRow>
           <TableRow>
             <TableCell className="font-medium text-gray-700">
-              Charging Wired:
+              Charging:
             </TableCell>
             <TableCell className="text-gray-700">
-              {device?.battery?.charging?.wired}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Wireless:
-            </TableCell>
-            <TableCell className="text-gray-700">
-              {device?.battery?.charging?.wireless?.join(", ")}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-gray-700">
-              Reverse Wireless:
-            </TableCell>
-            <TableCell className="text-gray-700">
-              {device?.battery?.charging?.reverse_wireless}
+              {device?.battery?.charging}
             </TableCell>
           </TableRow>
         </TableBody>
 
-        {/* Miscellaneous Information */}
+        {/* Misc Information */}
         <TableHeader>
           <TableRow>
             <TableHead
-              colSpan={3}
+              colSpan={2}
               className="text-xl font-semibold text-gray-700"
             >
               Miscellaneous
