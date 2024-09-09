@@ -61,11 +61,12 @@ const Footer = () => {
             trends and make informed decisions.
           </p>
 
-          <div className="text-slate-300 hover:text-white flex flex-wrap items-center gap-8 justify-center mt-4">
+          <div className="text-slate-300 hover:text-white flex flex-wrap items-center gap-8 justify-center mt-6">
             <Link href="/">Home</Link>
-            <Link href="/">About</Link>
-            <Link href="/">Contact</Link>
-            <Link href="/">Privacy Policy</Link>
+            <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
+            <Link href="/privacy-policy">Privacy Policy</Link>
+            <Link href="/faq">Faq</Link>
           </div>
         </div>
 
