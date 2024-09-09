@@ -1,3 +1,3 @@
-export default function DesktopCategoryPage() {
+export default function DesktopsCategoryPage() {
   return <section></section>;
 }

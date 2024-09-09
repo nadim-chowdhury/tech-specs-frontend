@@ -21,7 +21,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <section className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8">Contact Us</h1>
 
       {/* Contact Form */}
@@ -78,15 +78,15 @@ export default function ContactPage() {
       </form>
 
       {/* Contact Information */}
-      <section>
+      <div>
         <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
         <p>Email: contact@website.com</p>
         <p>Phone: (123) 456-7890</p>
         <p>Address: 123 Main Street, Anytown, USA</p>
-      </section>
+      </div>
 
       {/* Social Media Links */}
-      <section className="mt-8">
+      <div className="mt-8">
         <h2 className="text-2xl font-bold mb-4">Follow Us</h2>
         <div className="flex space-x-4">
           <a href="#" className="text-blue-600">
@@ -99,7 +99,7 @@ export default function ContactPage() {
             Instagram
           </a>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

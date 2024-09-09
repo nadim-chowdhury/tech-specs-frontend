@@ -1,3 +1,3 @@
-export default function CameraSlugPage() {
+export default function CameraItemSlugPage() {
   return <section></section>;
 }

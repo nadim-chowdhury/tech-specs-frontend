@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import MobileDeviceDetails from "@/components/mobiles/MobileDeviceDetails";
 import { apiFetch } from "@/lib/api-client";

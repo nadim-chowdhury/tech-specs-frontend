@@ -1,4 +1,4 @@
-import React from "react";
+import Image from "next/image";
 
 export default function AboutPage() {
   const teamMembers = [
@@ -18,28 +18,30 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="container mx-auto p-4">
+    <section className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8">About Us</h1>
 
       {/* Mission Statement */}
-      <section className="mb-12">
+      <div className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
         <p>
           Our mission is to provide users with comprehensive and accurate mobile
           device information, reviews, and comparisons, helping them make
           informed decisions.
         </p>
-      </section>
+      </div>
 
       {/* Team Profiles */}
-      <section className="mb-12">
+      <div className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Meet the Team</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {teamMembers.map((member, index) => (
             <div key={index} className="text-center">
-              <img
+              <Image
                 src={member.image}
                 alt={member.name}
+                width={1280}
+                height={720}
                 className="w-32 h-32 rounded-full mx-auto mb-4"
               />
               <h3 className="text-xl font-bold">{member.name}</h3>
@@ -48,10 +50,10 @@ export default function AboutPage() {
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
       {/* History */}
-      <section className="mb-12">
+      <div className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Our History</h2>
         <p>
           Founded in 2022, our website started as a small project aimed at
@@ -59,10 +61,10 @@ export default function AboutPage() {
           we have expanded our content to include reviews, comparisons, and a
           broader range of tech products.
         </p>
-      </section>
+      </div>
 
       {/* Contact Information */}
-      <section>
+      <div>
         <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
         <p>Email: contact@website.com</p>
         <p>Follow us on social media:</p>
@@ -77,7 +79,7 @@ export default function AboutPage() {
             Instagram
           </a>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

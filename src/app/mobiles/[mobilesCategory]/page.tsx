@@ -194,7 +194,7 @@ async function fetchMobiles(
   return await res.json();
 }
 
-export default async function BrandAllMobilesPage({
+export default async function MobilesCategoryPage({
   searchParams,
 }: {
   searchParams: any;

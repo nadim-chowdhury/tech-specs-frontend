@@ -255,12 +255,12 @@ export default async function AllMobilesPage({
   return (
     <section className="container mx-auto">
       {/* Category Header */}
-      <header className="mb-8">
+      <div className="mb-8">
         <h1 className="text-3xl font-bold text-slate-800">All Mobile Phones</h1>
         <p className="text-slate-600">
           Explore all mobile phones with detailed specs and reviews.
         </p>
-      </header>
+      </div>
 
       <AllMobileBrands />
 

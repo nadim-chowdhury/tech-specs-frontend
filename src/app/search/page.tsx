@@ -24,7 +24,7 @@ export default function SearchResultsPage() {
   ];
 
   return (
-    <div className="container mx-auto p-4">
+    <section className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">
         Search Results for {searchQuery}
       </h1>
@@ -72,6 +72,6 @@ export default function SearchResultsPage() {
           Next
         </button>
       </div>
-    </div>
+    </section>
   );
 }

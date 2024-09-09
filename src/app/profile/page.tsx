@@ -27,11 +27,11 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <section className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8">User Profile</h1>
 
       {/* Profile Information */}
-      <section className="mb-12">
+      <div className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Profile Information</h2>
         <form onSubmit={handleUpdateProfile}>
           <div className="mb-4">
@@ -65,10 +65,10 @@ export default function ProfilePage() {
             Update Profile
           </button>
         </form>
-      </section>
+      </div>
 
       {/* Activity Log */}
-      <section className="mb-12">
+      <div className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Activity Log</h2>
         <ul>
           {activityLog.map((activity) => (
@@ -77,10 +77,10 @@ export default function ProfilePage() {
             </li>
           ))}
         </ul>
-      </section>
+      </div>
 
       {/* Saved Products/Articles */}
-      <section>
+      <div>
         <h2 className="text-2xl font-bold mb-4">Saved Products/Articles</h2>
         <ul>
           {savedItems.map((item) => (
@@ -91,7 +91,7 @@ export default function ProfilePage() {
             </li>
           ))}
         </ul>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

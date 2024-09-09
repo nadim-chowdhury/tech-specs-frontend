@@ -38,7 +38,7 @@ export default function ProductsComparisonPage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <section className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8">Product Comparison</h1>
 
       {/* Comparison Table */}
@@ -141,6 +141,6 @@ export default function ProductsComparisonPage() {
           View Product B Details
         </a>
       </div>
-    </div>
+    </section>
   );
 }

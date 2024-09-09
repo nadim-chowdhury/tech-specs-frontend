@@ -1,3 +1,3 @@
 export default function CreateGagetPage() {
-  return <div></div>;
+  return <section></section>;
 }

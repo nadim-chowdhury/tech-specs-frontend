@@ -3,7 +3,7 @@ import { demoGadgetsOneCategory } from "@/utils/gadgets-demo-data";
 import Image from "next/image";
 // import { useRouter } from "next/router";
 
-export default function GadgetCategoryPage() {
+export default function GadgetsCategoryPage() {
   // const router = useRouter();
   // const { category } = router.query;
 
@@ -14,7 +14,7 @@ export default function GadgetCategoryPage() {
   const filteredGadgets = demoGadgetsOneCategory;
 
   return (
-    <section className="container mx-auto px-4 py-8">
+    <section className="container mx-auto">
       <h1 className="text-3xl font-bold text-center mb-8">Earbuds | Gadgets</h1>
 
       {filteredGadgets.length > 0 ? (
@@ -22,7 +22,7 @@ export default function GadgetCategoryPage() {
           {filteredGadgets.map((gadget) => (
             <div
               key={gadget.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
+              className="bg-slate-50 rounded-lg border overflow-hidden"
             >
               <Image
                 src="https://images.unsplash.com/photo-1494698853255-d0fa521abc6c?q=80&w=2128&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

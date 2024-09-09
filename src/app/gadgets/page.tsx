@@ -10,7 +10,7 @@ export default function AllGadgetsPage() {
         {demoGadgets.map((gadget) => (
           <div
             key={gadget.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden"
+            className="bg-slate-50 border rounded-lg overflow-hidden"
           >
             <Image
               src="https://images.unsplash.com/photo-1489359413553-6c264fb36c83?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

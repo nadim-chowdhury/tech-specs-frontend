@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { demoSoftwareItem } from "@/utils/computer-demo-data";
 
-export default function SoftwareSlugPage() {
+export default function SoftwareItemSlugPage() {
   // const router = useRouter();
   // const { slug } = router.query;
 

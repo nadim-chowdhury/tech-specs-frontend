@@ -24,7 +24,7 @@ export default function FAQPage() {
   );
 
   return (
-    <div className="container mx-auto p-4">
+    <section className="container mx-auto">
       <h1 className="text-3xl font-bold mb-8">Frequently Asked Questions</h1>
 
       {/* Search Bar */}
@@ -47,6 +47,6 @@ export default function FAQPage() {
           </details>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

@@ -2,7 +2,7 @@
 import { demoLaptopItem } from "@/utils/computer-demo-data";
 import Image from "next/image";
 
-export default function LaptopSlugPage() {
+export default function LaptopItemSlugPage() {
   // const router = useRouter();
   // const { slug } = router.query;
 

@@ -43,12 +43,12 @@ export default function ReviewItemSlugPage() {
     },
     comments: [
       { user: "Alice", comment: "Great review, very helpful!" },
-      { user: "Bob", comment: "I found the cons section to be accurate." },
+      { user: "Bob", comment: "I found the cons div to be accurate." },
     ],
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <section className="container mx-auto p-4">
       {/* Review Header */}
       <div className="flex items-center mb-8">
         <Image
@@ -72,18 +72,18 @@ export default function ReviewItemSlugPage() {
       </div>
 
       {/* Review Content */}
-      {review.content.map((section, index) => (
+      {review.content.map((div, index) => (
         <div key={index} className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">{section.sectionTitle}</h2>
-          <p>{section.text}</p>
+          <h2 className="text-2xl font-bold mb-4">{div.sectionTitle}</h2>
+          <p>{div.text}</p>
           <div className="flex mt-4">
-            {section.images.map((image, idx) => (
+            {div.images.map((image, idx) => (
               <Image
                 key={idx}
                 src={image}
                 width={360}
                 height={360}
-                alt={section.sectionTitle}
+                alt={div.sectionTitle}
                 className="w-1/3 h-auto mr-4"
               />
             ))}
@@ -145,6 +145,6 @@ export default function ReviewItemSlugPage() {
           ))}
         </ul>
       </div>
-    </div>
+    </section>
   );
 }
