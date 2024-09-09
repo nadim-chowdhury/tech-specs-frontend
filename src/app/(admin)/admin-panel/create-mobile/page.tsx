@@ -6,7 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function CreateProduct() {
+export default function CreateProductPage() {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
   const [images, setImages] = useState<any>([]);

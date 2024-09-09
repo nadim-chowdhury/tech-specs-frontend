@@ -177,15 +177,15 @@ import Link from "next/link";
 async function fetchMobiles(
   search = "",
   page = 1,
-  limit = 10,
-  sort = "relevance",
-  filter: any = {}
+  limit = 12,
+  sort = "relevance"
 ) {
-  const priceRangeQuery = filter.priceRange?.join(",") || "";
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/mobiles?search=${search}&page=${page}&limit=${limit}&sort=${sort}&priceRange=${priceRangeQuery}&ram=${filter.ram}&storage=${filter.storage}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/mobile/all-mobiles?search=${search}&page=${page}&limit=${limit}&sort=${sort}`,
     { cache: "no-store" }
   );
+
+  console.log("res:", res);
 
   if (!res.ok) {
     throw new Error(`Error: ${res.statusText}`);
@@ -212,7 +212,7 @@ export default async function BrandAllMobilesPage({
   };
 
   // Fetch mobiles data server-side
-  const { mobiles } = await fetchMobiles(search, page, 10, sort, filter);
+  const { mobiles } = await fetchMobiles(search, page, 12, sort);
 
   return (
     <section className="container mx-auto">
@@ -237,12 +237,12 @@ export default async function BrandAllMobilesPage({
             <select
               className="p-2 w-full rounded"
               defaultValue={filter.priceRange.join(",")}
-              onChange={(e) => {
-                const newPriceRange = e.target.value.split(",");
-                window.location.search = `?priceRange=${newPriceRange.join(
-                  ","
-                )}`;
-              }}
+              // onChange={(e) => {
+              //   const newPriceRange = e.target.value.split(",");
+              //   window.location.search = `?priceRange=${newPriceRange.join(
+              //     ","
+              //   )}`;
+              // }}
             >
               <option value="">All</option>
               <option value={[0, 299].join(",")}>$0 - $299</option>
@@ -255,9 +255,9 @@ export default async function BrandAllMobilesPage({
             <select
               className="p-2 w-full rounded"
               defaultValue={filter.ram}
-              onChange={(e) => {
-                window.location.search = `?ram=${e.target.value}`;
-              }}
+              // onChange={(e) => {
+              //   window.location.search = `?ram=${e.target.value}`;
+              // }}
             >
               <option value="">All</option>
               <option value="4GB">4GB</option>
@@ -270,9 +270,9 @@ export default async function BrandAllMobilesPage({
             <select
               className="p-2 w-full rounded"
               defaultValue={filter.storage}
-              onChange={(e) => {
-                window.location.search = `?storage=${e.target.value}`;
-              }}
+              // onChange={(e) => {
+              //   window.location.search = `?storage=${e.target.value}`;
+              // }}
             >
               <option value="">All</option>
               <option value="64GB">64GB</option>
@@ -287,9 +287,9 @@ export default async function BrandAllMobilesPage({
             <select
               className="p-2 rounded"
               defaultValue={sort}
-              onChange={(e) => {
-                window.location.search = `?sort=${e.target.value}`;
-              }}
+              // onChange={(e) => {
+              //   window.location.search = `?sort=${e.target.value}`;
+              // }}
             >
               <option value="relevance">Sort by Relevance</option>
               <option value="price">Sort by Price</option>

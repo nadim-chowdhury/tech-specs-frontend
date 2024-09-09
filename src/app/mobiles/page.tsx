@@ -199,6 +199,7 @@
 //   );
 // }
 
+import AllMobileBrands from "@/components/mobiles/AllMobileBrands";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -260,6 +261,8 @@ export default async function AllMobilesPage({
           Explore all mobile phones with detailed specs and reviews.
         </p>
       </header>
+
+      <AllMobileBrands />
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Filters Sidebar */}
@@ -326,22 +329,22 @@ export default async function AllMobilesPage({
                     <h2 className="text-lg font-semibold text-slate-800 mb-2">
                       {mobile?.name}
                     </h2>
-                    <p className="text-sm text-slate-600 mb-1">
+                    <p className="text-sm text-slate-600 mb-1 capitalize">
                       <strong>Brand:</strong> {mobile?.brand}
                     </p>
                     <p className="text-sm text-slate-600 mb-1">
                       <strong>Launch Date:</strong>{" "}
                       {mobile?.launch.release_date}
                     </p>
-                    <p className="text-sm text-slate-600 mb-1">
+                    {/* <p className="text-sm text-slate-600 mb-1">
                       <strong>Display Size:</strong> {mobile?.display.size}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
 
                 <div className="px-6 pb-6">
                   <Link
-                    href={`/mobiles/mobiles-categories/${mobile?.brand.toLowerCase()}/${
+                    href={`/mobiles/${mobile?.brand.toLowerCase()}/${
                       mobile?.slug
                     }`}
                   >
