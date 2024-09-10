@@ -262,11 +262,9 @@ export default async function AllMobilesPage({
         </p>
       </div>
 
-      <AllMobileBrands />
-
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Filters Sidebar */}
-        <aside className="bg-slate-100 border rounded-lg p-6">
+        {/* <aside className="bg-slate-100 border rounded-lg p-6">
           <h2 className="text-xl font-bold mb-4">Filters</h2>
 
           <div className="mb-4">
@@ -295,16 +293,18 @@ export default async function AllMobilesPage({
               <option value="128GB">128GB</option>
             </select>
           </div>
-        </aside>
+        </aside> */}
+
+        <AllMobileBrands />
 
         {/* Product Grid */}
         <div className="col-span-1 md:col-span-3">
-          <div className="flex justify-end mb-4">
+          {/* <div className="flex justify-end mb-4">
             <select className="p-2 rounded" defaultValue={sort}>
               <option value="createdAt">Sort by Relevance</option>
               <option value="price">Sort by Price</option>
             </select>
-          </div>
+          </div> */}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {mobiles?.map((mobile: any) => (

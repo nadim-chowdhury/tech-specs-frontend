@@ -2,12 +2,12 @@ import { latestReviews } from "@/utils/latest-reviews";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function LatestReviews() {
+export default function FeaturedGadgets() {
   return (
     <section>
       <div className="container mx-auto">
         <h2 className="text-3xl font-bold text-slate-800 mb-6">
-          Latest Reviews
+          Featured Gadgets
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

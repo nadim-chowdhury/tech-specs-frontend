@@ -175,23 +175,33 @@ import Link from "next/link";
 
 // Server-side data fetching function
 async function fetchMobiles(
-  search = "",
   page = 1,
   limit = 12,
-  sort = "relevance"
+  sort = "createdAt",
+  sortDirection = "DESC"
 ) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/mobile/all-mobiles?search=${search}&page=${page}&limit=${limit}&sort=${sort}`,
-    { cache: "no-store" }
-  );
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/mobile/all-mobiles?page=${page}&limit=${limit}&sort=${sort}&sortDirection=${sortDirection}`,
+      { cache: "no-store" } // no caching for server-side data fetching
+    );
 
-  console.log("res:", res);
+    if (!res.ok) {
+      throw new Error(`Error: ${res.statusText}`);
+    }
 
-  if (!res.ok) {
-    throw new Error(`Error: ${res.statusText}`);
+    const data = await res.json();
+
+    if (data && data.data && data.total) {
+      return { mobiles: data.data, total: data.total };
+    } else {
+      console.error("Unexpected data format:", data);
+      return { mobiles: [], total: 0 };
+    }
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return { mobiles: [], total: 0 };
   }
-
-  return await res.json();
 }
 
 export default async function MobilesCategoryPage({
@@ -201,35 +211,31 @@ export default async function MobilesCategoryPage({
 }) {
   // Extract query params from URL
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
-  const search = searchParams.search || "";
-  const sort = searchParams.sort || "relevance";
-  const filter = {
-    priceRange: searchParams.priceRange
-      ? searchParams.priceRange.split(",").map(Number)
-      : [],
-    ram: searchParams.ram || "",
-    storage: searchParams.storage || "",
-  };
+  const sort = searchParams.sort || "createdAt";
+  const sortDirection = searchParams.sortDirection || "DESC";
+  const limit = 12;
 
-  // Fetch mobiles data server-side
-  const { mobiles } = await fetchMobiles(search, page, 12, sort);
+  // Fetch mobiles data
+  const { mobiles, total } = await fetchMobiles(
+    page,
+    limit,
+    sort,
+    sortDirection
+  );
 
   return (
     <section className="container mx-auto">
       {/* Category Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">
-          {(filter as any).brand || "Xiaomi"} Phones
-        </h1>
+        <h1 className="text-3xl font-bold">Xiaomi Phones</h1>
         <p className="text-slate-600">
-          Explore the latest {(filter as any).brand || "Xiaomi"} phones with
-          detailed specs and reviews.
+          Explore the latest Xiaomi phones with detailed specs and reviews.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="">
         {/* Filters Sidebar */}
-        <aside className="p-6 bg-slate-100 rounded-lg border">
+        {/* <aside className="p-6 bg-slate-100 rounded-lg border">
           <h2 className="text-xl font-bold mb-4">Filters</h2>
 
           <div className="mb-4">
@@ -279,11 +285,11 @@ export default async function MobilesCategoryPage({
               <option value="128GB">128GB</option>
             </select>
           </div>
-        </aside>
+        </aside> */}
 
         {/* Product Grid */}
-        <div className="md:col-span-3">
-          <div className="flex justify-end mb-4">
+        <div className="">
+          {/* <div className="flex justify-end mb-4">
             <select
               className="p-2 rounded"
               defaultValue={sort}
@@ -294,17 +300,21 @@ export default async function MobilesCategoryPage({
               <option value="relevance">Sort by Relevance</option>
               <option value="price">Sort by Price</option>
             </select>
-          </div>
+          </div> */}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mobiles?.map((product: any) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {mobiles?.map((mobile: any) => (
               <div
-                key={product?.id}
+                key={mobile?.id}
                 className="bg-slate-50 rounded-lg overflow-hidden border flex flex-col"
               >
                 <Image
-                  src={product?.image}
-                  alt={product?.name}
+                  src={
+                    mobile?.images
+                      ? mobile?.images[0]?.url
+                      : "https://via.placeholder.com/150"
+                  }
+                  alt={mobile?.name}
                   className="w-full h-48 object-cover mb-2 rounded-t-md"
                   width={150}
                   height={150}
@@ -312,18 +322,18 @@ export default async function MobilesCategoryPage({
 
                 <div className="mt-4 px-6">
                   <h3 className="text-lg font-semibold text-slate-800 mb-2">
-                    {product?.name}
+                    {mobile?.name}
                   </h3>
-                  <p className="text-sm text-slate-600">RAM: {product?.ram}</p>
+                  <p className="text-sm text-slate-600">RAM: {mobile?.ram}</p>
                   <p className="text-sm text-slate-600">
-                    Storage: {product?.storage}
+                    Storage: {mobile?.storage}
                   </p>
                 </div>
 
                 <div className="px-6 py-4 mt-auto">
                   <Link
-                    href={`/mobiles/mobiles-categories/${product?.brand.toLowerCase()}/${
-                      product?.id
+                    href={`/mobiles/${mobile?.brand.toLowerCase()}/${
+                      mobile?.slug
                     }`}
                     className="font-bold text-slate-600 hover:underline"
                   >
@@ -335,7 +345,7 @@ export default async function MobilesCategoryPage({
           </div>
 
           {/* Pagination */}
-          <div className="flex justify-center mt-8">
+          {/* <div className="flex justify-center mt-8">
             <Link
               href={`?page=${page - 1}`}
               className="px-4 py-2 mx-1 bg-slate-200 rounded"
@@ -353,7 +363,7 @@ export default async function MobilesCategoryPage({
             >
               <button>Next</button>
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

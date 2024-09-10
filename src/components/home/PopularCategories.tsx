@@ -32,7 +32,7 @@ export default function PopularCategories() {
                     {category.description}
                   </p>
                   <Link
-                    href={`/categories/${category.slug}`}
+                    href={`/${category.slug}`}
                     className="mt-4 mb-6 inline-block text-primary font-semibold hover:underline"
                   >
                     Show All

@@ -1,15 +1,15 @@
-import FeaturedProducts from "@/components/home/FeaturedProducts";
-import LatestReviews from "@/components/home/LatestReviews";
+import FeaturedGadgets from "@/components/home/FeaturedGadgets";
 import PopularCategories from "@/components/home/PopularCategories";
 import TrendingArticles from "@/components/home/TrendingArticles";
 import HeroSection from "@/components/home/HeroSection";
+import FeaturedMobiles from "@/components/home/FeaturedMobiles";
 
 export default function Home() {
   return (
     <main className="home-container flex flex-col gap-12 lg:gap-16">
       <HeroSection />
-      <FeaturedProducts />
-      <LatestReviews />
+      <FeaturedMobiles />
+      <FeaturedGadgets />
       <TrendingArticles />
       <PopularCategories />
     </main>

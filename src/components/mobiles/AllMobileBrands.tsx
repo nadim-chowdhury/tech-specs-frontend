@@ -3,12 +3,12 @@ import Link from "next/link";
 
 export default function AllMobileBrands() {
   return (
-    <div className="containe mx-auto flex items-center justify-center flex-wrap gap-4 mb-8">
+    <div className="grid grid-cols-2 gap-4">
       {mobileBrands?.map((item, idx) => (
         <Link
           key={idx}
           href={`/mobiles/${item.toLowerCase()}`}
-          className="px-4 py-2 bg-slate-100 rounded-full border"
+          className="bg-slate-100 rounded-lg flex items-center justify-center transition-all duration-300 hover:bg-slate-200"
         >
           {item}
         </Link>

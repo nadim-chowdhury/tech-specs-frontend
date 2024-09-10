@@ -11,8 +11,8 @@ export const footerData = {
         { name: "Oneplus", url: "/mobiles/oneplus" },
         { name: "Redmi", url: "/mobiles/redmi" },
         { name: "Oppo", url: "/mobiles/oppo" },
-        { name: "Realme", url: "/mobiles/realme" },
         { name: "Vivo", url: "/mobiles/vivo" },
+        { name: "Realme", url: "/mobiles/realme" },
       ],
     },
     {
@@ -29,12 +29,22 @@ export const footerData = {
       ],
     },
     {
-      title: "Reviews",
+      title: "Accessories",
       links: [
-        { name: "Mobile Reviews", url: "/reviews/mobiles" },
-        { name: "Computers Reviews", url: "/reviews/computers" },
-        { name: "Gadgets Reviews", url: "/reviews/gadgets" },
-        { name: "Camera Reviews", url: "/reviews/cameras" },
+        { name: "Keyboard", url: "/computers/accessories/cpu" },
+        { name: "Mouse", url: "/computers/accessories/gpu" },
+        { name: "Headphone", url: "/computers/accessories/motherboard" },
+        { name: "Speaker", url: "/computers/accessories/ram" },
+        { name: "Router", url: "/computers/accessories/storage" },
+      ],
+    },
+    {
+      title: "Gadgets",
+      links: [
+        { name: "Smart Watch", url: "/gadgets/smart-watch" },
+        { name: "Ear Buds", url: "/gadgets/ear-buds" },
+        // { name: "Gadgets Reviews", url: "/gadgets/gadgets" },
+        // { name: "Camera Reviews", url: "/gadgets/cameras" },
       ],
     },
     {
@@ -56,3 +66,10 @@ export const footerData = {
     phone: "+1 234 567 890",
   },
 };
+
+export const footerLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+  { href: "/privacy-policy", label: "Privacy Policy" },
+];

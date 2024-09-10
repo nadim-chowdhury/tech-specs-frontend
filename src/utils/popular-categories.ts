@@ -2,7 +2,7 @@ export const popularCategories = [
   {
     id: 1,
     name: "Mobile Phones",
-    slug: "mobile-phones",
+    slug: "mobiles",
     description:
       "In-depth reviews and specifications of the latest mobile phones, covering performance, design, camera, and battery life.",
     image:

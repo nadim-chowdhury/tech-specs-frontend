@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <StoreProvider>
-          <section className="app-container">
+          <section className="app-container text-slate-700">
             <Header />
             <main className="main-content">{children}</main>
             <ToastContainer
